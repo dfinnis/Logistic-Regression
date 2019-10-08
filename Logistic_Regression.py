@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-# get_ipython().run_line_magic('matplotlib', 'inline')
 
 data = pd.read_csv("ex2data1.csv")
 
