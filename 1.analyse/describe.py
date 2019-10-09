@@ -16,6 +16,13 @@ import argparse
 import os
 import sys
 
+import numpy as np
+import pandas as pd
+
+def error_exit(err_msg):
+    print("Error: {}" .format(err_msg))
+    sys.exit()    
+
 def parse_arg():
     my_parser = argparse.ArgumentParser(description='Display numerical features for given dataset')
     my_parser.add_argument('Dataset',
@@ -24,15 +31,32 @@ def parse_arg():
                        help='the path to dataset')
     args = my_parser.parse_args()
 
-    dataset = args.Dataset
-    if not os.path.isfile(dataset):
-        print('The dataset specified does not exist')
-        sys.exit()
+    path = args.Dataset
+    if not os.path.isfile(path):
+        error_exit("Dataset specified does not exist")
+    return path
+
+def parse_file(path):
+    try:
+        data = pd.read_csv(path)
+        # print(data) #######
+        Flying = np.array(data['Flying'], dtype='float64')
+        print(Flying) #########
+    except Exception:
+        error_exit("Failed to read file")
+
+    dataset = path ##########
+    return dataset
+
+def parse():
+    path = parse_arg()
+    dataset = parse_file(path)
     return dataset
 
 def main():
     print("Hello world!") ####
-    dataset = parse_arg()
+    dataset = parse()
+    print(dataset)
     print("Goodbye world!") ####
 
 if __name__ == '__main__':
