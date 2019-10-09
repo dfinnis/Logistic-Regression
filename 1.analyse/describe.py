@@ -49,21 +49,19 @@ def std_dev(feature, mean, count):
 
 def parse_file(path):
     try:
+        df = pd.DataFrame({'': ['Count', 'Mean ', 'Std  ', 'Min  ', '25%  ', '50%  ', '75%  ', 'Max  ']})
         data = pd.read_csv(path)
         col = 0
         for column in data.columns:
-            count = 0
-            total = 0
             # if col == 4:
             #     ### deal with age
             # if col == 5:
             #     ### deal with left/right handed
             if col > 5:
+                count = 0
+                total = 0
                 feature = np.array(data[column], dtype='float64')
-                # print(column) #########                
-                # print(feature) #########
                 feature = np.sort(feature)
-                # print(feature) #########
                 set = 0
                 for value in feature:
                     if str(value) != "nan":
@@ -75,23 +73,17 @@ def parse_file(path):
                             set = 1
                         else:
                             maximum = value
-                    # print("value: {}" .format(value)) #########
-                    # print("total: {}" .format(total)) #########
-
                 mean = total / count
                 std = std_dev(feature, mean, count)
                 quarter = feature[round(count/4)]
                 half = feature[round(count/2)]
                 three_quarter = feature[round((count/4)*3)]
 
-                result = np.array([column, count, mean, std, minimum, quarter, half, three_quarter, maximum])
-                print(result)
-            ## save feature
+                df[column] = np.array([count, mean, std, minimum, quarter, half, three_quarter, maximum])
             col += 1
     except Exception:
         error_exit("Failed to read file")
-    dataset = path ##########
-    return dataset
+    return df.to_string(index=False)
 
 def parse():
     path = parse_arg()
@@ -99,10 +91,8 @@ def parse():
     return dataset
 
 def main():
-    print("Hello world!") ####
     dataset = parse()
     print(dataset)
-    print("Goodbye world!") ####
 
 if __name__ == '__main__':
     main()
