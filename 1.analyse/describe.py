@@ -2,7 +2,7 @@
 ## display info for numerical features in format:
 
 ## $> describe.[extension] dataset_train.csv
-## 		 Feature 1       Feature 2       Feature 3       Feature 4
+##               Feature 1       Feature 2       Feature 3       Feature 4
 ## Count        149.000000      149.000000      149.000000      149.000000
 ## Mean           5.848322        3.051007        3.774497        1.205369
 ## Std            5.906338        3.081445        4.162021        1.424286
@@ -15,9 +15,9 @@
 import argparse
 import os
 import sys
-
 import numpy as np
 import pandas as pd
+import math
 
 def error_exit(err_msg):
     print("Error: {}" .format(err_msg))
@@ -36,15 +36,60 @@ def parse_arg():
         error_exit("Dataset specified does not exist")
     return path
 
+def std_dev(feature, mean, count):
+    total = 0
+    for value in feature:
+        if str(value) != "nan":
+            diff = value - mean
+            square = diff * diff
+            total += square
+    mean_sq = total / count
+    std_dev = math.sqrt(mean_sq)
+    return std_dev
+
 def parse_file(path):
     try:
         data = pd.read_csv(path)
-        # print(data) #######
-        Flying = np.array(data['Flying'], dtype='float64')
-        print(Flying) #########
+        col = 0
+        for column in data.columns:
+            count = 0
+            total = 0
+            # if col == 4:
+            #     ### deal with age
+            # if col == 5:
+            #     ### deal with left/right handed
+            if col > 5:
+                feature = np.array(data[column], dtype='float64')
+                # print(column) #########                
+                # print(feature) #########
+                feature = np.sort(feature)
+                # print(feature) #########
+                set = 0
+                for value in feature:
+                    if str(value) != "nan":
+                        count += 1
+                        total += value
+                        if set == 0:
+                            minimum = value
+                            maximum = value
+                            set = 1
+                        else:
+                            maximum = value
+                    # print("value: {}" .format(value)) #########
+                    # print("total: {}" .format(total)) #########
+
+                mean = total / count
+                std = std_dev(feature, mean, count)
+                quarter = feature[round(count/4)]
+                half = feature[round(count/2)]
+                three_quarter = feature[round((count/4)*3)]
+
+                result = np.array([column, count, mean, std, minimum, quarter, half, three_quarter, maximum])
+                print(result)
+            ## save feature
+            col += 1
     except Exception:
         error_exit("Failed to read file")
-
     dataset = path ##########
     return dataset
 
