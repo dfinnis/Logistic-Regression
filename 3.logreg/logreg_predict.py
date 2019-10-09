@@ -12,3 +12,9 @@
 ## 5,Ravenclaw
 ## 6,Hufflepuff
 ##        [...]
+
+def main():
+    print("Hello world!")
+
+if __name__ == '__main__':
+    main()
