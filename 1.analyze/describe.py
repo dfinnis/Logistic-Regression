@@ -49,8 +49,8 @@ def std_dev(feature, mean, count):
 
 def parse_file(path):
     try:
-        df = pd.DataFrame({'': ['Count', 'Mean ', 'Std  ', 'Min  ', '25%  ', '50%  ', '75%  ', 'Max  ']})
         data = pd.read_csv(path)
+        df = pd.DataFrame({'': ['Count', 'Mean ', 'Std  ', 'Min  ', '25%  ', '50%  ', '75%  ', 'Max  ']})
         col = 0
         for column in data.columns:
             # if col == 4:
@@ -85,13 +85,9 @@ def parse_file(path):
         error_exit("Failed to read file")
     return df.to_string(index=False)
 
-def parse():
+def main():
     path = parse_arg()
     dataset = parse_file(path)
-    return dataset
-
-def main():
-    dataset = parse()
     print(dataset)
 
 if __name__ == '__main__':
