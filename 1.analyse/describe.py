@@ -12,8 +12,28 @@
 ## 75%            6.400000        3.300000        5.100000        1.800000
 ## Max            7.900000        4.400000        6.900000        2.500000
 
+import argparse
+import os
+import sys
+
+def parse_arg():
+    my_parser = argparse.ArgumentParser(description='Display numerical features for given dataset')
+    my_parser.add_argument('Dataset',
+                       metavar='dataset',
+                       type=str,
+                       help='the path to dataset')
+    args = my_parser.parse_args()
+
+    dataset = args.Dataset
+    if not os.path.isfile(dataset):
+        print('The dataset specified does not exist')
+        sys.exit()
+    return dataset
+
 def main():
-    print("Hello world!")
+    print("Hello world!") ####
+    dataset = parse_arg()
+    print("Goodbye world!") ####
 
 if __name__ == '__main__':
     main()
