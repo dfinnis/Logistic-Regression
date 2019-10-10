@@ -6,7 +6,8 @@ def main():
     print("Hello world!") ######
     usage="Displays a histogram answering the question: Which Hogwarts course has a homogeneous score distribution between all four houses?"
     path = tools.parse_arg(usage)
-    print(path)
+    data = pd.read_csv(path)
+    print(data)
     print("Goodbye world!") ######
 
 if __name__ == '__main__':
