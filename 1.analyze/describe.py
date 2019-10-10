@@ -1,25 +1,9 @@
-import argparse
-import os
-import sys
 import numpy as np
 import pandas as pd
 import math
-
-def error_exit(err_msg):
-    print("Error: {}" .format(err_msg))
-    sys.exit()    
-
-def parse_arg():
-    my_parser = argparse.ArgumentParser(description='Display numerical features for given dataset')
-    my_parser.add_argument('Dataset',
-                       metavar='dataset',
-                       type=str,
-                       help='the path to dataset')
-    args = my_parser.parse_args()
-    path = args.Dataset
-    if not os.path.isfile(path):
-        error_exit("Dataset specified does not exist")
-    return path
+import sys
+sys.path.append('../tools/')
+import tools as tools
 
 def std_dev(feature, mean, count):
     total = 0
@@ -67,11 +51,12 @@ def parse_file(path):
                 df[column] = np.array([count, mean, std, minimum, quarter, half, three_quarter, maximum])
             col += 1
     except Exception:
-        error_exit("Failed to read file")
+        tools.error_exit("Failed to read file")
     return df.to_string(index=False)
 
 def main():
-    path = parse_arg()
+    usage="Display info for numerical features for given dataset"
+    path = tools.parse_arg(usage)
     dataset = parse_file(path)
     print(dataset)
 
