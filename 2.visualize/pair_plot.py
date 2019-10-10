@@ -4,7 +4,7 @@ import tools as tools
 
 def main():
     print("Hello world!") ######
-    usage="Displays a pair plot which highlights features useful for logistic regression"
+    usage="Display a pair plot which highlights features useful for logistic regression"
     path = tools.parse_arg(usage)
     data = pd.read_csv(path)
     print(data)

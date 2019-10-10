@@ -7,9 +7,8 @@ import tools as tools
 import pandas as pd
 
 def main():
-    usage="Displays a scatter plot answering the question: What are the two features that are similar?"
+    usage="Display a scatter plot answering the question: What are the two features that are similar?"
     path = tools.parse_arg(usage)
-
     data = pd.read_csv(path)
     # pd.set_option('display.max_rows', -1)
     print(data)

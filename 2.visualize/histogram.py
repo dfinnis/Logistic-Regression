@@ -4,7 +4,7 @@ import tools as tools
 
 def main():
     print("Hello world!") ######
-    usage="Displays a histogram answering the question: Which Hogwarts course has a homogeneous score distribution between all four houses?"
+    usage="Display a histogram answering the question: Which Hogwarts course has a homogeneous score distribution between all four houses?"
     path = tools.parse_arg(usage)
     data = pd.read_csv(path)
     print(data)
