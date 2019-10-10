@@ -6,15 +6,16 @@ import tools as tools
 # import matplotlib.pyplot as plt 
 import pandas as pd
 
+def visualize(data):
+    # pd.set_option('display.max_rows', -1)
+    # print(data)
+    # print(data['Best Hand'])
+
 def main():
     usage='Display a scatter plot answering the question: What are the two features that are similar?'
     path = tools.parse_arg(usage)
     data = pd.read_csv(path)
-    # pd.set_option('display.max_rows', -1)
-    print(data)
-    # print(data['Best Hand'])
-
-    print('Goodbye world!') ######
+    visualize(data)
 
 if __name__ == '__main__':
     main()
