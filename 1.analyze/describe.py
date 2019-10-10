@@ -8,7 +8,7 @@ import tools as tools
 def std_dev(feature, mean, count):
     total = 0
     for value in feature:
-        if str(value) != "nan":
+        if str(value) != 'nan':
             diff = value - mean
             square = diff * diff
             total += square
@@ -33,7 +33,7 @@ def parse_file(path):
                 feature = np.sort(feature)
                 set = 0
                 for value in feature:
-                    if str(value) != "nan":
+                    if str(value) != 'nan':
                         count += 1
                         total += value
                         if set == 0:
@@ -51,11 +51,11 @@ def parse_file(path):
                 df[column] = np.array([count, mean, std, minimum, quarter, half, three_quarter, maximum])
             col += 1
     except Exception:
-        tools.error_exit("Failed to read file")
+        tools.error_exit('Failed to read file')
     return df.to_string(index=False)
 
 def main():
-    usage="Display info for numerical features for given dataset"
+    usage='Display info for numerical features for given dataset'
     path = tools.parse_arg(usage)
     dataset = parse_file(path)
     print(dataset)

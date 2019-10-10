@@ -3,7 +3,7 @@ import os
 import sys
 
 def error_exit(err_msg):
-    print("Error: {}" .format(err_msg))
+    print('Error: {}' .format(err_msg))
     sys.exit()
 
 def parse_arg(usage):
@@ -15,5 +15,5 @@ def parse_arg(usage):
     args = my_parser.parse_args()
     path = args.Dataset
     if not os.path.isfile(path):
-        error_exit("Dataset specified does not exist")
+        error_exit('Dataset specified does not exist')
     return path

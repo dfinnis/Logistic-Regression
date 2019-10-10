@@ -3,23 +3,26 @@ sys.path.append('../tools/')
 import tools as tools
 import pandas as pd
 
-def write_weights():
+def write_weights(weights):
     try:
         file = open('../data/weights.csv', 'w')            
-        file.write('Oh hi there')
+        file.write(weights)
         file.close
     except Exception:
-    	tools.error_exit("Saving weights.csv failed")
+    	tools.error_exit('Saving weights.csv failed')
 
+def train(data):
+	### pump some iron ###
+	# print(data) ###
+	weights = 'Thanks for stopping by!' ###
+	return weights
 
 def main():
-    usage="Given dataset_train.csv, generate weights.csv for prediction. Use gradient descent to minimize error"
+    usage = 'Given dataset_train.csv, generate weights.csv for prediction. Use gradient descent to minimize error'
     path = tools.parse_arg(usage)
     data = pd.read_csv(path)
-    print(data)
-    ## train
-    write_weights()
-    print("Goodbye world!") ######
+    weights = train(data)
+    write_weights(weights)
 
 if __name__ == '__main__':
     main()
