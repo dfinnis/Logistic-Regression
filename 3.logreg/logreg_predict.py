@@ -26,12 +26,10 @@ def parse_args(usage):
     args = my_parser.parse_args()
     data_path = args.Dataset
     weights_path = args.Weights
-    if not os.path.isfile(data_path):
-        tools.error_exit('dataset_test.csv specified does not exist')
-    if not os.path.isfile(weights_path):
-        tools.error_exit('weights.csv specified does not exist')
-    data = pd.read_csv(data_path)
-    weights = pd.read_csv(weights_path)
+    tools.is_file(data_path)
+    tools.is_file(weights_path)
+    data = tools.read_csv(data_path)
+    weights = tools.read_csv(weights_path)
     return data, weights
 
 def predict(data, weights):

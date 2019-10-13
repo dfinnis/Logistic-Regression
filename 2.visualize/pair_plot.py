@@ -1,15 +1,15 @@
 import sys
 sys.path.append('../tools/')
 import tools as tools
-import pandas as pd
+# import pandas as pd
 
 def visualize(data):
-    # print(data)
+    print(data) #######
 
 def main():
     usage='Display a pair plot which highlights features useful for logistic regression'
     path = tools.parse_arg(usage)
-    data = pd.read_csv(path)
+    data = tools.read_csv(path)
     visualize(data)
 
 if __name__ == '__main__':
