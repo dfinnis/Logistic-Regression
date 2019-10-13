@@ -12,7 +12,8 @@ def visualize(data):
     # print(data['Best Hand']) ########
 
 def main():
-	usage='Display a scatter plot answering the question: What are the two features that are similar?'
+	usage = 'Display a scatter plot answering the question:\
+			 What are the two features that are similar?'
 	data = tools.parse_arg(usage)
 	visualize(data)
 

@@ -40,7 +40,7 @@ def predict(data, weights):
 	return predictions
 
 def main():
-    usage='Given dataset_test.csv and weights.csv, generate prediction file houses.csv'
+    usage = 'Given dataset_test.csv and weights.csv, generate prediction file houses.csv'
     data, weights = parse_args(usage)
     predictions = predict(data, weights)
     write_houses(predictions)

@@ -18,7 +18,8 @@ def train(data):
 	return weights
 
 def main():
-    usage = 'Given dataset_train.csv, generate weights.csv for prediction. Use gradient descent to minimize error'
+    usage = 'Given dataset_train.csv, generate weights.csv for prediction.\
+             Use gradient descent to minimize error'
     data = tools.parse_arg(usage)
     weights = train(data)
     write_weights(weights)

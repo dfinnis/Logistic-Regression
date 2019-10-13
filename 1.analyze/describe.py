@@ -54,7 +54,7 @@ def parse_file(data):
     return df.to_string(index=False)
 
 def main():
-    usage='Display numerical features for given dataset'
+    usage = 'Display numerical features for given dataset'
     data = tools.parse_arg(usage)
     features = parse_file(data)
     print(features)
