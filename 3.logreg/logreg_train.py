@@ -1,7 +1,6 @@
 import sys
 sys.path.append('../tools/')
 import tools as tools
-import pandas as pd
 
 def write_weights(weights):
     try:

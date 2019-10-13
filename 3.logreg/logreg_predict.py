@@ -2,8 +2,6 @@ import sys
 sys.path.append('../tools/')
 import tools as tools
 import argparse
-import os
-import pandas as pd
 
 def write_houses(predictions):
     try:
@@ -31,11 +29,11 @@ def parse_args(usage):
     return data, weights
 
 def predict(data, weights):
-	### Look into the magic orb ###
-	# print(data) ###
-	# print(weights) ###
-	predictions = 'You stay classy San Diego!' ####
-	return predictions
+    ### Look into the magic orb ###
+    # print(data) ###
+    # print(weights) ###
+    predictions = 'You stay classy San Diego!' ####
+    return predictions
 
 def main():
     usage = 'Given dataset_test.csv and weights.csv, generate prediction file houses.csv'
