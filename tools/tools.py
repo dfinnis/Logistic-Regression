@@ -12,6 +12,7 @@ def is_file(path):
         error_exit('path specified ({}) does not exist' .format(path))
 
 def read_csv(path):
+    is_file(path)
     try:
         data = pd.read_csv(path)
     except Exception:
@@ -26,6 +27,5 @@ def parse_arg(usage):
                        help='the path to dataset')
     args = my_parser.parse_args()
     path = args.Dataset
-    is_file(path)
     data = read_csv(path)
     return data

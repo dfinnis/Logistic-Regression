@@ -26,8 +26,6 @@ def parse_args(usage):
     args = my_parser.parse_args()
     data_path = args.Dataset
     weights_path = args.Weights
-    tools.is_file(data_path)
-    tools.is_file(weights_path)
     data = tools.read_csv(data_path)
     weights = tools.read_csv(weights_path)
     return data, weights
