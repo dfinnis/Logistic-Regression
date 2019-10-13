@@ -2,9 +2,7 @@ import tools as tools
 import numpy as np
 from sklearn.metrics import accuracy_score
 import argparse
-import os
-import sys
-import pandas as pd
+from termcolor import colored
 
 def parse_args(usage):
     my_parser = argparse.ArgumentParser(description=usage)
@@ -23,23 +21,31 @@ def parse_args(usage):
     tools.is_file(predicted_path)
     true = tools.read_csv(true_path)
     predicted = tools.read_csv(predicted_path)
-    return true, predicted
+    return true['Hogwarts House'], predicted['Hogwarts House']
 
 
 def find_accuracy(true, predicted):
-	print(true['Hogwarts House']) ########
-	print(predicted['Hogwarts House']) ####
-	y_pred = [0, 2, 2, 'grifindor'] ######
-	y_true = [0, 1, 2, 'grifindor'] #######
-	score = accuracy_score(y_true, y_pred)
-	percent = score * 100
+	try:
+		if not len(true) == len(predicted):
+			tools.error_exit('Number of true and predicted houses different')
+		decimal = accuracy_score(true, predicted)
+		percent = decimal * 100
+	except Exception:
+		tools.error_exit('Failed to find accuracy, are you sure predictions are valid?')
 	return percent
+
+def print_accuracy(accuracy, length):
+	if accuracy >= 98:
+		color = 'green'
+	else:
+		color = 'red'
+	print(colored('Accuracy: {}% for {} predicted houses' .format(accuracy, length), color))
 
 def main():
     usage='Display accuracy of prediction, given the true answers and predicted answers as .csv'
     true, predicted = parse_args(usage)
     accuracy = find_accuracy(true, predicted)
-    print("accuracy: {}%" .format(accuracy))
+    print_accuracy(accuracy, (len(predicted) - 1))
 
 if __name__ == '__main__':
     main()
