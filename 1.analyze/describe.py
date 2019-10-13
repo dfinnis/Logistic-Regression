@@ -16,9 +16,9 @@ def std_dev(feature, mean, count):
     std_dev = math.sqrt(mean_sq)
     return std_dev
 
-def parse_file(data):
+def parse_data(data):
     try:
-        df = pd.DataFrame({'': ['Count', 'Mean ', 'Std  ', 'Min  ', '25%  ', '50%  ', '75%  ', 'Max  ']})
+        features = pd.DataFrame({'': ['Count', 'Mean ', 'Std  ', 'Min  ', '25%  ', '50%  ', '75%  ', 'Max  ']})
         col = 0
         for column in data.columns:
             # if col == 4:
@@ -47,16 +47,16 @@ def parse_file(data):
                 half = feature[round(count/2)]
                 three_quarter = feature[round((count/4)*3)]
 
-                df[column] = np.array([count, mean, std, minimum, quarter, half, three_quarter, maximum])
+                features[column] = np.array([count, mean, std, minimum, quarter, half, three_quarter, maximum])
             col += 1
     except Exception:
         tools.error_exit('Failed to read file')
-    return df.to_string(index=False)
+    return features.to_string(index=False)
 
 def main():
     usage = 'Display numerical features for given dataset'
     data = tools.parse_arg(usage)
-    features = parse_file(data)
+    features = parse_data(data)
     print(features)
 
 if __name__ == '__main__':
