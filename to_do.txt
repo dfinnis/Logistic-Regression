@@ -1,0 +1,12 @@
+#### TO DO ####
+ - Visualizer functions
+ - Log_reg train
+ - log_reg predict
+
+
+#### BONUS ####
+1. accuracy.py
+2. Usage?
+3. Error handling and messages?
+4. 
+5. 

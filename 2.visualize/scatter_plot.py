@@ -13,8 +13,7 @@ def visualize(data):
 
 def main():
 	usage='Display a scatter plot answering the question: What are the two features that are similar?'
-	path = tools.parse_arg(usage)
-	data = tools.read_csv(path)
+	data = tools.parse_arg(usage)
 	visualize(data)
 
 if __name__ == '__main__':

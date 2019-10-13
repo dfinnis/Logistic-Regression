@@ -8,8 +8,7 @@ def visualize(data):
 
 def main():
     usage='Display a histogram answering the question: Which Hogwarts course has a homogeneous score distribution between all four houses?'
-    path = tools.parse_arg(usage)
-    data = tools.read_csv(path)
+    data = tools.parse_arg(usage)
     visualize(data)
 
 if __name__ == '__main__':

@@ -16,9 +16,8 @@ def std_dev(feature, mean, count):
     std_dev = math.sqrt(mean_sq)
     return std_dev
 
-def parse_file(path):
+def parse_file(data):
     try:
-        data = pd.read_csv(path)
         df = pd.DataFrame({'': ['Count', 'Mean ', 'Std  ', 'Min  ', '25%  ', '50%  ', '75%  ', 'Max  ']})
         col = 0
         for column in data.columns:
@@ -55,10 +54,10 @@ def parse_file(path):
     return df.to_string(index=False)
 
 def main():
-    usage='Display info for numerical features for given dataset'
-    path = tools.parse_arg(usage)
-    dataset = parse_file(path)
-    print(dataset)
+    usage='Display numerical features for given dataset'
+    data = tools.parse_arg(usage)
+    features = parse_file(data)
+    print(features)
 
 if __name__ == '__main__':
     main()

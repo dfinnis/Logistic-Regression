@@ -19,8 +19,7 @@ def train(data):
 
 def main():
     usage = 'Given dataset_train.csv, generate weights.csv for prediction. Use gradient descent to minimize error'
-    path = tools.parse_arg(usage)
-    data = tools.read_csv(path)
+    data = tools.parse_arg(usage)
     weights = train(data)
     write_weights(weights)
 

@@ -11,6 +11,13 @@ def is_file(path):
     if not os.path.isfile(path):
         error_exit('path specified ({}) does not exist' .format(path))
 
+def read_csv(path):
+    try:
+        data = pd.read_csv(path)
+    except Exception:
+        error_exit('Failed to read {}' .format(path))
+    return data
+
 def parse_arg(usage):
     my_parser = argparse.ArgumentParser(description=usage)
     my_parser.add_argument('Dataset',
@@ -20,11 +27,5 @@ def parse_arg(usage):
     args = my_parser.parse_args()
     path = args.Dataset
     is_file(path)
-    return path
-
-def read_csv(path):
-    try:
-        data = pd.read_csv(path)
-    except Exception:
-        error_exit('Failed to read {}' .format(path))
+    data = read_csv(path)
     return data
