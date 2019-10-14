@@ -16,7 +16,7 @@ def std_dev(feature, mean, count):
     std_dev = math.sqrt(mean_sq)
     return std_dev
 
-def parse_data(data):
+def find_features(data):
     try:
         features = pd.DataFrame({'': ['Count', 'Mean ', 'Std  ', 'Min  ', '25%  ', '50%  ', '75%  ', 'Max  ']})
         col = 0
@@ -51,13 +51,13 @@ def parse_data(data):
             col += 1
     except Exception:
         tools.error_exit('Failed to read file')
-    return features.to_string(index=False)
+    return features
 
 def main():
     usage = 'Display numerical features for given dataset'
     data = tools.parse_arg(usage)
-    features = parse_data(data)
-    print(features)
+    features = find_features(data)
+    print(features.to_string(index=False))
 
 if __name__ == '__main__':
     main()
