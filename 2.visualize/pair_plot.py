@@ -1,21 +1,14 @@
 import sys
 sys.path.append('../tools/')
 import tools as tools
-sys.path.append('../1.analyze/')
-import describe as describe
-# import pandas as pd
-
-def normalize(data):
-	features = describe.find_features(data)
-	print(features) ######
-	normed = 'I am a normal human' #####
-	return normed
+import matplotlib.pyplot as plt
+import seaborn as sb
 
 def visualize(data):
-    # pd.set_option('display.max_rows', -1) #######
-    normed = normalize(data)
-    print(normed) #######
-    print(data) #######
+    data = data.drop(columns=['Index', 'First Name', 'Last Name', 'Birthday', 'Best Hand', 'Arithmancy', 'Defense Against the Dark Arts', 'Care of Magical Creatures'])
+    data = data.dropna()
+    sb.pairplot(data, hue='Hogwarts House', markers = '.', height=2)
+    plt.show()
 
 def main():
     usage = 'Display a pair plot which highlights features useful for logistic regression'
@@ -24,3 +17,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+# Reasons for removal:
+# 'Arithmancy' & 'Care of Magical Creatures' - homogenous distribution between houses
+# 'Defense Against the Dark Arts' - same as Astronomy

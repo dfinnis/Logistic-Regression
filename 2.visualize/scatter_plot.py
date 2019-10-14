@@ -4,7 +4,7 @@ import tools as tools
 import matplotlib.pyplot as plt
 
 def scatter(data, course1, course2):
-	plt.figure()
+	plt.figure(figsize=(15, 12))
 	plt.scatter(data[course1], data[course2], label = 'Students')
 	plt.legend()
 	plt.title('Correlated Features')
@@ -13,7 +13,6 @@ def scatter(data, course1, course2):
 	plt.show()
 
 def visualize(data):
-	# data = data.dropna()
 	course1 = 'Defense Against the Dark Arts'
 	course2 = 'Astronomy'
 	scatter(data, course1, course2)
@@ -26,7 +25,3 @@ def main():
 
 if __name__ == '__main__':
 	main()
-
-
-
-
