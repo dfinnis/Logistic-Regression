@@ -13,29 +13,10 @@ def scatter(data, course1, course2):
 	plt.show()
 
 def visualize(data):
-	data = data.dropna()
+	# data = data.dropna()
 	course1 = 'Defense Against the Dark Arts'
 	course2 = 'Astronomy'
 	scatter(data, course1, course2)
-
-	# print('Hello hello')
-	# col = 0
-	# for column in data.columns:
-	# 	if col > 5:
-	# 		print('Hi hi')######
-	# 		course1 = column
-	# 		print(course1)##
-	# 		col2 = 0
-	# 		for column in data.columns:
-	# 			if col > 5:
-	# 				course2 = column
-	# 				print(course1)##
-	# 				print(course2)##				
-	# 			col2 += 1
-	# 		course2 = data[col]
-	# 		print(course2)##
-	# 		scatter(data, course1, course2)
-	# 	col += 1
 
 def main():
 	usage = 'Display a scatter plot answering the question:\
