@@ -1,24 +1,41 @@
 import sys
 sys.path.append('../tools/')
 import tools as tools
-sys.path.append('../1.analyze/')
-import describe as describe
-# import numpy as np
-# import seaborn as sns
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
-def normalize(data):
-	features = describe.find_features(data)
-	print(features) ######
-	normed = 'I am a normal human' #####
-	return normed
+def scatter(data, course1, course2):
+	plt.figure()
+	plt.scatter(data[course1], data[course2], label = 'Students')
+	plt.legend()
+	plt.title('Correlated Features')
+	plt.xlabel(course1)
+	plt.ylabel(course2)
+	plt.show()
 
 def visualize(data):
-    # pd.set_option('display.max_rows', -1) #######
-    normed = normalize(data)
-    print(normed) #######
-    # print(data) #######
-    # print(data['Best Hand']) ########
+	data = data.dropna()
+	course1 = 'Defense Against the Dark Arts'
+	course2 = 'Astronomy'
+	scatter(data, course1, course2)
+
+	# print('Hello hello')
+	# col = 0
+	# for column in data.columns:
+	# 	if col > 5:
+	# 		print('Hi hi')######
+	# 		course1 = column
+	# 		print(course1)##
+	# 		col2 = 0
+	# 		for column in data.columns:
+	# 			if col > 5:
+	# 				course2 = column
+	# 				print(course1)##
+	# 				print(course2)##				
+	# 			col2 += 1
+	# 		course2 = data[col]
+	# 		print(course2)##
+	# 		scatter(data, course1, course2)
+	# 	col += 1
 
 def main():
 	usage = 'Display a scatter plot answering the question:\
