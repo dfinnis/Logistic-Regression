@@ -22,11 +22,18 @@ def normalize(data):
             normed[column] = (normed[column] - mean) / std
     return normed
 
-def train(data):
-    ### pump some iron ###
-    # print(data) ###
+def preprocess(data):
+    data = data.drop(columns=['Arithmancy', 'Defense Against the Dark Arts', 'Care of Magical Creatures'])
+    data = data.dropna()
     normed = normalize(data)
-    # print(normed) #######
+    print(data) ###
+    print('oh hi') ########
+    print(normed) #######
+    return data, normed
+
+def train(data):
+    data, normed = preprocess(data)
+    ### pump some iron ###
     weights = 'Thanks for stopping by!' ###
     return weights
 
@@ -39,3 +46,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+# Reasons for removal:
+# 'Arithmancy' & 'Care of Magical Creatures' - homogenous distribution between houses
+# 'Defense Against the Dark Arts' - same as Astronomy

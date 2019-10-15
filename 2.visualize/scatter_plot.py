@@ -4,7 +4,7 @@ import tools as tools
 import matplotlib.pyplot as plt
 
 def scatter(data, course1, course2):
-	plt.figure(figsize=(15, 12))
+	plt.figure()
 	plt.scatter(data[course1], data[course2], label = 'Students')
 	plt.legend()
 	plt.title('Correlated Features')

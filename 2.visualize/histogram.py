@@ -24,7 +24,7 @@ def visualize(data, normed):
     warnings.simplefilter(action = "ignore", category = RuntimeWarning)
     for column in normed.columns:
         if not column == 'Hogwarts House':
-            plt.figure(figsize=(15, 12))
+            plt.figure()
             plt.hist(get_grades(data, normed, "Ravenclaw", column), bins=25, alpha=0.5, label = 'Ravenclaw', color = 'b')
             plt.hist(get_grades(data, normed, "Slytherin", column), bins=25, alpha=0.5, label = 'Slytherin', color = 'y')
             plt.hist(get_grades(data, normed, "Gryffindor", column), bins=25, alpha=0.5, label = 'Gryffindor', color = 'g')
