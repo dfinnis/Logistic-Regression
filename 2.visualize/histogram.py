@@ -16,24 +16,27 @@ def normalize(data):
             normed[column] = (normed[column] - mean) / std
     return normed
 
-def get_grades(data, normed, house, course):
-    df = normed[data['Hogwarts House'] == house][course]
-    return df
+def plot_house(data, normed, house, column, color):
+    grades = normed[data['Hogwarts House'] == house][column]
+    plt.hist(grades, bins=25, alpha=0.5, label = house, color = color)
+
+def histogram(data, normed, column):
+    plt.figure()
+    plot_house(data, normed, 'Gryffindor', column, 'r')
+    plot_house(data, normed, 'Ravenclaw', column, 'b')
+    plot_house(data, normed, 'Hufflepuff', column, 'y')
+    plot_house(data, normed, 'Slytherin', column, 'g')
+    plt.legend(loc = 'upper right')
+    plt.title(column)
+    plt.xlabel('Normalized Score')
+    plt.ylabel('Number of Students')
+    plt.show()
 
 def visualize(data, normed):
     warnings.simplefilter(action = "ignore", category = RuntimeWarning)
     for column in normed.columns:
         if not column == 'Hogwarts House':
-            plt.figure()
-            plt.hist(get_grades(data, normed, "Ravenclaw", column), bins=25, alpha=0.5, label = 'Ravenclaw', color = 'b')
-            plt.hist(get_grades(data, normed, "Slytherin", column), bins=25, alpha=0.5, label = 'Slytherin', color = 'y')
-            plt.hist(get_grades(data, normed, "Gryffindor", column), bins=25, alpha=0.5, label = 'Gryffindor', color = 'g')
-            plt.hist(get_grades(data, normed, "Hufflepuff", column), bins=25, alpha=0.5, label = 'Hufflepuff', color = 'r')
-            plt.legend(loc = 'upper right')
-            plt.title(column)
-            plt.xlabel('Normalized Score')
-            plt.ylabel('Number of Students')
-            plt.show()
+            histogram(data, normed, column)
 
 def main():
     usage = 'Display a histogram answering the question:\
@@ -44,3 +47,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+## Arithmancy & Care of Magical Creatures
