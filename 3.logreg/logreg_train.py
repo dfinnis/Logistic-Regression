@@ -67,9 +67,9 @@ def train(data):
     np.set_printoptions(threshold=sys.maxsize, suppress=True)    
     # print(p)
 
-    accuracy = y - p
-    score = np.where(accuracy == 0)[1].size
-    print(score)
+    # accuracy = y - p
+    # score = np.where(accuracy == 0)[1].size
+    # print(score)
 
 
     ### pump some iron ###
