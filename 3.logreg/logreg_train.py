@@ -57,8 +57,6 @@ def train(data):
     theta = np.zeros(3).reshape(3, 1)
     theta, J_history = fit(X, y, theta, alpha, num_iters)
     
-    # print(theta, J_history[-1])
-
     # plt.figure()
     # ax = plt.axes()
     # ax.plot(J_history)
@@ -67,6 +65,7 @@ def train(data):
     p = predict(X, theta)
     # np.set_printoptions(threshold=sys.maxsize)    
     print(p)
+
     # accuracy = y - p
     # score = np.where(accuracy == 0)[1].size
     # print(score)
