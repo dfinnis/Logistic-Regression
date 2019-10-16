@@ -36,6 +36,7 @@ def preprocess(data):
     data = data.drop(columns=['Arithmancy', 'Defense Against the Dark Arts', 'Care of Magical Creatures'])
     data = data.dropna()
     normed = normalize(data)
+    # print(normed)
 
     X = normed.loc[:, 'History of Magic':'Transfiguration']
     ones = np.ones([X.shape[0],1])
@@ -63,12 +64,12 @@ def train(data):
     # plt.show()
 
     p = predict(X, theta)
-    # np.set_printoptions(threshold=sys.maxsize)    
-    print(p)
+    np.set_printoptions(threshold=sys.maxsize, suppress=True)    
+    # print(p)
 
-    # accuracy = y - p
-    # score = np.where(accuracy == 0)[1].size
-    # print(score)
+    accuracy = y - p
+    score = np.where(accuracy == 0)[1].size
+    print(score)
 
 
     ### pump some iron ###
