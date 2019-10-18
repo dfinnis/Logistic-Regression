@@ -28,7 +28,7 @@ def visualize(data, plot_all):
         data = data.drop(columns=['Arithmancy', 'Care of Magical Creatures', 'Potions', 'Defense Against the Dark Arts'])
     data = data.drop(columns=['Index', 'First Name', 'Last Name', 'Birthday', 'Best Hand'])
     data = data.dropna()
-    sb.pairplot(data, hue='Hogwarts House', markers = '.', height=2)
+    sb.pairplot(data, hue='Hogwarts House', palette=['blue', 'green', 'red', 'gold'], markers = '.', height=2)
     plt.show()
 
 def main():
