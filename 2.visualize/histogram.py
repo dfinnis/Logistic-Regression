@@ -6,16 +6,6 @@ import describe as describe
 import matplotlib.pyplot as plt
 import warnings
 
-def normalize(data):
-    features = describe.find_features(data)
-    normed = data.drop(columns=['Index', 'First Name', 'Last Name', 'Birthday', 'Best Hand'])
-    for column in normed.columns:
-        if not column == 'Hogwarts House':
-            mean = features[column][1]
-            std = features[column][2]
-            normed[column] = (normed[column] - mean) / std
-    return normed
-
 def plot_house(data, normed, house, column, color):
     grades = normed[data['Hogwarts House'] == house][column]
     plt.hist(grades, bins=25, alpha=0.5, label = house, color = color)
@@ -33,19 +23,17 @@ def histogram(data, normed, column):
     plt.show()
 
 def visualize(data, normed):
-    warnings.simplefilter(action = "ignore", category = RuntimeWarning)
-    for column in normed.columns:
-        if not column == 'Hogwarts House':
-            histogram(data, normed, column)
+    warnings.simplefilter(action = 'ignore', category = RuntimeWarning)
+    histogram(data, normed, 'Arithmancy')                ## homogeneous
+    histogram(data, normed, 'Care of Magical Creatures') ## homogeneous
+    histogram(data, normed, 'Potions')                   ## mostly homogenous
 
 def main():
     usage = 'Display a histogram answering the question:\
     		 Which Hogwarts course has a homogeneous score distribution between all four houses?'
     data = tools.parse_arg(usage)
-    normed = normalize(data)
+    normed = tools.normalize(data)
     visualize(data, normed)
 
 if __name__ == '__main__':
     main()
-
-## Arithmancy & Care of Magical Creatures

@@ -2,6 +2,8 @@ import argparse
 import os
 import sys
 import pandas as pd
+sys.path.append('../1.analyze/')
+import describe as describe
 
 def error_exit(err_msg):
     print('Error: {}' .format(err_msg))
@@ -29,3 +31,13 @@ def parse_arg(usage):
     path = args.Dataset
     data = read_csv(path)
     return data
+
+def normalize(data):
+    features = describe.find_features(data)
+    normed = data.drop(columns=['Index', 'First Name', 'Last Name', 'Birthday', 'Best Hand'])
+    for column in normed.columns:
+        if not column == 'Hogwarts House':
+            mean = features[column][1]
+            std = features[column][2]
+            normed[column] = (normed[column] - mean) / std
+    return normed
