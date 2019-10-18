@@ -12,10 +12,10 @@ def plot_house(data, normed, house, column, color):
 
 def histogram(data, normed, column):
     plt.figure()
-    plot_house(data, normed, 'Gryffindor', column, 'r')
     plot_house(data, normed, 'Ravenclaw', column, 'b')
-    plot_house(data, normed, 'Hufflepuff', column, 'y')
     plot_house(data, normed, 'Slytherin', column, 'g')
+    plot_house(data, normed, 'Gryffindor', column, 'r')
+    plot_house(data, normed, 'Hufflepuff', column, 'y')
     plt.legend(loc = 'upper right')
     plt.title(column)
     plt.xlabel('Normalized Score')
