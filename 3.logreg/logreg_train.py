@@ -9,7 +9,7 @@ from Logistic_Regression import fit, cost, predict, sigmoid
 
 import timeit
     
-np.set_printoptions(threshold=sys.maxsize, suppress=True)    
+# np.set_printoptions(threshold=sys.maxsize, suppress=True)    
 
 def write_weights(weights):
     try:
@@ -34,87 +34,54 @@ def preprocess(data):
     data = data.dropna()
     normed = normalize(data)
 
-    # houses = {'Gryffindor': ['History of Magic','Transfiguration', 'Flying'], 
-    #         'Ravenclaw': ['Muggle Studies', 'Charms'], 
-    #         'Slytherin': ['Divination'], 'Hufflepuff': ['Astronomy', 'Herbology', 'Ancient Runes']}
-
-    # courses = list(normed.columns.values)
+    courses = list(normed.columns.values)
+    courses[0] = 'intercept'
     # courses.remove('Hogwarts House')
 
-    # return X, y
-    return normed
-
-# returns a numpy array of 0s and 1s (not in <housename> / is in <housename>)
-def filter_House(housename, y):
-    house = np.array([housename])
-    return y == house
-
-def iterate_houses(data, normed, house):
     X = normed.loc[:, 'Astronomy':]
-    # X = normed[[course1,course2]]
     ones = np.ones([X.shape[0],1])
     X = np.concatenate((ones, X), axis=1)
+    print(X)
 
+    return normed, courses, X
+
+# returns a numpy array of 0s and 1s (not in <housename> / is in <housename>)
+def iterate_houses(normed, house):
     y = np.array(normed.loc[:,'Hogwarts House']).reshape(1359,1) ## why use data here, rather than normed?
-    y = filter_House(house, y).astype(int)
+    housename = np.array([house])
+    
+    # y = filter_House(house, y).astype(int)
+    return (y == housename).astype(int)
 
-    return X, y
-
-def train(data, normed):
-
+def train(normed, X):
     alpha = 0.02
     num_iters = 100000
     weights = {}
 
-    # theta = np.zeros(3).reshape(3, 1)
-
     houses = ['Gryffindor', 'Ravenclaw', 'Slytherin', 'Hufflepuff']
     for house in houses:
-        X, y = iterate_houses(data, normed, house)
+        y = iterate_houses(normed, house)
         theta = np.zeros(X.shape[1]).reshape(X.shape[1],1)
         theta, J_history = fit(X, y, theta, alpha, num_iters)
-        flatten = [item for array in theta for item in array]
-        p = predict(X, theta)
-        print(p)
+        flatten = [item for array in theta for item in array] ## flattens a 2D array into 1D
+        # p = predict(X, theta)
         weights[house] = flatten
 
-
-    # start = timeit.timeit()
-    # for house, noted_courses in houses.items():
-    #     for noted_course in noted_courses:
-    #         for course in courses:
-    #             theta = np.zeros(3).reshape(3, 1)
-    #             X, y = iterate_courses(data, normed, house, noted_course, course)
-    #             theta, J_history = fit(X, y, theta, alpha, num_iters)
-
-
-    #             weight = [house, noted_course, course, flatten]
-    #             print(weight)
-    #             weights.append(weight) ## instead: no weights[], use generator and write to csv one line at a time?        
-
-    # p = predict(X, theta)
-    # np.set_printoptions(threshold=sys.maxsize, suppress=True)    
-
-    ### pump some iron ###
-    # end = timeit.timeit()
-    # print(end - start)
-    # weights = 'Thanks for stopping by!' ###
-    # print(weights)
     return weights
 
 def main():
     usage = 'Given dataset_train.csv, generate weights.csv for prediction.\
              Use gradient descent to minimize error'
     data = tools.parse_arg(usage)
-    normed = preprocess(data)
-
-    weights = train(data, normed)
-
-    weights = pd.DataFrame.from_dict(weights, orient='index')
+    normed, courses, X = preprocess(data)
+    weights = train(normed, X)
+   
+    # weights = pd.DataFrame.from_dict(weights, columns=courses, orient='index')
+    weights = pd.DataFrame.from_dict(weights, orient='index', columns=courses)
     print(weights)
-    weights.to_csv('weights.csv', header=False)
+    # weights.to_csv('weights.csv', header=False)
+    weights.to_csv('weights.csv')
 
-    # write_weights(weights)
 
 if __name__ == '__main__':
     main()
