@@ -34,24 +34,24 @@ def preprocess(data):
     data = data.dropna()
     normed = normalize(data)
 
-    houses = {'Gryffindor': ['History of Magic','Transfiguration', 'Flying'], 
-            'Ravenclaw': ['Muggle Studies', 'Charms'], 
-            'Slytherin': ['Divination'], 'Hufflepuff': ['Astronomy', 'Herbology', 'Ancient Runes']}
+    # houses = {'Gryffindor': ['History of Magic','Transfiguration', 'Flying'], 
+    #         'Ravenclaw': ['Muggle Studies', 'Charms'], 
+    #         'Slytherin': ['Divination'], 'Hufflepuff': ['Astronomy', 'Herbology', 'Ancient Runes']}
 
-    courses = list(normed.columns.values)
-    courses.remove('Hogwarts House')
+    # courses = list(normed.columns.values)
+    # courses.remove('Hogwarts House')
 
     # return X, y
-    return normed, houses, courses
+    return normed
 
 # returns a numpy array of 0s and 1s (not in <housename> / is in <housename>)
 def filter_House(housename, y):
     house = np.array([housename])
     return y == house
 
-def iterate_courses(data, normed, house, course1, course2):
-    # X = normed.loc[:, 'Ancient Runes':'History of Magic']
-    X = normed[[course1,course2]]
+def iterate_houses(data, normed, house):
+    X = normed.loc[:, 'Astronomy':]
+    # X = normed[[course1,course2]]
     ones = np.ones([X.shape[0],1])
     X = np.concatenate((ones, X), axis=1)
 
@@ -60,45 +60,59 @@ def iterate_courses(data, normed, house, course1, course2):
 
     return X, y
 
-def train(data, normed, houses, courses):
+def train(data, normed):
 
     alpha = 0.02
     num_iters = 100000
-    weights = []
+    weights = {}
 
-    start = timeit.timeit()
-    for house, noted_courses in houses.items():
-        for noted_course in noted_courses:
-            for course in courses:
-                theta = np.zeros(3).reshape(3, 1)
-                X, y = iterate_courses(data, normed, house, noted_course, course)
-                theta, J_history = fit(X, y, theta, alpha, num_iters)
+    # theta = np.zeros(3).reshape(3, 1)
 
-                flatten = [item for array in theta for item in array]
+    houses = ['Gryffindor', 'Ravenclaw', 'Slytherin', 'Hufflepuff']
+    for house in houses:
+        X, y = iterate_houses(data, normed, house)
+        theta = np.zeros(X.shape[1]).reshape(X.shape[1],1)
+        theta, J_history = fit(X, y, theta, alpha, num_iters)
+        flatten = [item for array in theta for item in array]
+        p = predict(X, theta)
+        print(p)
+        weights[house] = flatten
 
-                weight = [house, noted_course, course, flatten]
-                print(weight)
-                weights.append(weight) ## instead: no weights[], use generator and write to csv one line at a time?        
+
+    # start = timeit.timeit()
+    # for house, noted_courses in houses.items():
+    #     for noted_course in noted_courses:
+    #         for course in courses:
+    #             theta = np.zeros(3).reshape(3, 1)
+    #             X, y = iterate_courses(data, normed, house, noted_course, course)
+    #             theta, J_history = fit(X, y, theta, alpha, num_iters)
+
+
+    #             weight = [house, noted_course, course, flatten]
+    #             print(weight)
+    #             weights.append(weight) ## instead: no weights[], use generator and write to csv one line at a time?        
 
     # p = predict(X, theta)
     # np.set_printoptions(threshold=sys.maxsize, suppress=True)    
 
     ### pump some iron ###
-    end = timeit.timeit()
-    print(end - start)
+    # end = timeit.timeit()
+    # print(end - start)
     # weights = 'Thanks for stopping by!' ###
+    # print(weights)
     return weights
 
 def main():
     usage = 'Given dataset_train.csv, generate weights.csv for prediction.\
              Use gradient descent to minimize error'
     data = tools.parse_arg(usage)
-    normed, houses, courses = preprocess(data)
+    normed = preprocess(data)
 
-    weights = train(data, normed, houses, courses)
+    weights = train(data, normed)
 
-    weights = pd.DataFrame(weights)
-    weights.to_csv('weights.csv', index=False, header=False)
+    weights = pd.DataFrame.from_dict(weights, orient='index')
+    print(weights)
+    weights.to_csv('weights.csv', header=False)
 
     # write_weights(weights)
 
