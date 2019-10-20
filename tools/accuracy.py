@@ -17,12 +17,9 @@ def parse_args(usage):
     args = my_parser.parse_args()
     true_path = args.Truth
     predicted_path = args.Predicted
-    tools.is_file(true_path)
-    tools.is_file(predicted_path)
     true = tools.read_csv(true_path)
     predicted = tools.read_csv(predicted_path)
     return true['Hogwarts House'], predicted['Hogwarts House']
-
 
 def find_accuracy(true, predicted):
 	try:
@@ -32,7 +29,7 @@ def find_accuracy(true, predicted):
 		percent = decimal * 100
 	except Exception:
 		tools.error_exit('Failed to find accuracy, are you sure predictions are valid?')
-	return percent
+	return round(percent, 2)
 
 def print_accuracy(accuracy, length):
 	if accuracy >= 98:
@@ -42,7 +39,7 @@ def print_accuracy(accuracy, length):
 	print(colored('Accuracy: {}% for {} predicted houses' .format(accuracy, length), color))
 
 def main():
-    usage='Display accuracy of prediction, given the true answers and predicted answers as .csv'
+    usage = 'Display accuracy of prediction, given the true answers and predicted answers as .csv'
     true, predicted = parse_args(usage)
     accuracy = find_accuracy(true, predicted)
     print_accuracy(accuracy, (len(predicted) - 1))
