@@ -26,8 +26,6 @@ def find_features(data):
         features = pd.DataFrame({'': ['Count', 'Mean ', 'Std  ', 'Min  ', '25%  ', '50%  ', '75%  ', 'Max  ']})
         col = 0
         for column in data.columns:
-            # if col == 4: ### deal with age
-            # if col == 5: ### deal with left/right handed
             if col > 5:
                 count = 0
                 total = 0
