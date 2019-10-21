@@ -25,16 +25,10 @@ def parse_args(usage):
     return data, timer
 
 def preprocess(data):
-    data = data.drop(columns=['Arithmancy', 'Defense Against the Dark Arts', 'Care of Magical Creatures'])
-    data = data.dropna()
-    normed = tools.normalize(data)
-    
+    fill = 'drop'
+    normed, X = tools.generic_preprocess(data, fill)
     courses = list(normed.columns.values)
     courses[0] = 'intercept'
-    
-    X = normed.loc[:, 'Astronomy':]
-    ones = np.ones([X.shape[0],1])
-    X = np.concatenate((ones, X), axis=1)
     return normed, courses, X
 
 def iterate_houses(normed, house):

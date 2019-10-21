@@ -43,6 +43,18 @@ def normalize(data):
             normed[column] = (normed[column] - mean) / std
     return normed
 
+def generic_preprocess(data, fill):
+    data = data.drop(columns=['Arithmancy', 'Defense Against the Dark Arts', 'Care of Magical Creatures'])
+    if fill == 'mean':
+        data = data.fillna(data.mean())
+    else:
+        data = data.dropna()
+    normed = normalize(data)
+    X = normed.loc[:, 'Astronomy':]
+    ones = np.ones([X.shape[0],1])
+    X = np.concatenate((ones, X), axis=1)
+    return normed, X
+
 def sigmoid(z):
     return 1 / (1 + np.exp(-z))
     

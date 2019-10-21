@@ -25,18 +25,13 @@ def parse_args(usage):
     return data, weights
 
 def preprocess(data):
-    data = data.drop(columns=['Arithmancy', 'Defense Against the Dark Arts', 'Care of Magical Creatures'])
-    data = data.fillna(data.mean())
-    normed = tools.normalize(data)
-
-    X = normed.loc[:, 'Astronomy':]
-    ones = np.ones([X.shape[0],1])
-    X = np.concatenate((ones, X), axis=1)
-    return normed, X
+    fill = 'mean'
+    normed, X = tools.generic_preprocess(data, fill)
+    return X
 
 def predict_house(data, weights):
     houses = ['Gryffindor', 'Ravenclaw', 'Slytherin', 'Hufflepuff']
-    _, X = preprocess(data)
+    X = preprocess(data)
     weights = weights.drop(weights.columns[0], axis=1)
     students = data.loc[:, 'Hogwarts House'].to_frame()
 
