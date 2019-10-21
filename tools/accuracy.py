@@ -42,7 +42,7 @@ def main():
     usage = 'Display accuracy of prediction, given the true answers and predicted answers as .csv'
     true, predicted = parse_args(usage)
     accuracy = find_accuracy(true, predicted)
-    print_accuracy(accuracy, (len(predicted) - 1))
+    print_accuracy(accuracy, len(predicted))
 
 if __name__ == '__main__':
     main()

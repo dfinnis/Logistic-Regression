@@ -8,6 +8,12 @@ import logistic_regression as logreg
 
 np.set_printoptions(suppress=True)
 
+def check_names(data_path, weights_path):
+    if ('dataset' in data_path) == False:
+        tools.error_exit('Data path specified ({}) does not include dataset' .format(data_path))
+    if ('weights' in weights_path) == False:
+        tools.error_exit('Weights path specified ({}) does not include weights' .format(weights_path))
+
 def parse_args(usage):
     my_parser = argparse.ArgumentParser(description=usage)
     my_parser.add_argument('Dataset',
@@ -21,6 +27,7 @@ def parse_args(usage):
     args = my_parser.parse_args()
     data_path = args.Dataset
     weights_path = args.Weights
+    check_names(data_path, weights_path)
     data = tools.read_csv(data_path)
     weights = tools.read_csv(weights_path)
     return data, weights
