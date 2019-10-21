@@ -4,3 +4,4 @@
 3. Error handling, messages & usage
 4. logreg_train -t timer
 5. pandas_describe.py
+6. corrupt/empty data tests
