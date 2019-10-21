@@ -14,10 +14,10 @@ def std_dev(feature, mean, count):
     std_dev = math.sqrt(mean_sq)
     return std_dev
 
-def find_quart(feature, count, quart = 1):
+def find_quart(feature, count, quart):
     index = (count - 1) * (quart * 0.25)
     floor = math.floor(index)
-    if floor == index:
+    if index == floor:
         return feature[int(index)]
     return (feature[floor] + (feature[floor + 1] - feature[floor]) * (index - floor))
 

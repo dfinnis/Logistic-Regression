@@ -13,3 +13,4 @@
 	- show confidence?
 	- show the calculation? 
 	- more accurate vs faster?(all courses vs select)
+6. pandas_describe.py
