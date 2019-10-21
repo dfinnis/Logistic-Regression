@@ -35,56 +35,39 @@ def parse_args(usage):
     return data, weights
 
 def preprocess(data):
-    data = data.drop(columns=['Arithmancy', 'Defense Against the Dark Arts', 'Potions', 'Care of Magical Creatures'])
+    data = data.drop(columns=['Arithmancy', 'Defense Against the Dark Arts', 'Care of Magical Creatures'])
     data = data.fillna(data.mean())
     normed = normalize(data)
-
-    courses = list(normed.columns.values)
-    courses[0] = 'intercept'
-    # courses.remove('Hogwarts House')
 
     X = normed.loc[:, 'Astronomy':]
     ones = np.ones([X.shape[0],1])
     X = np.concatenate((ones, X), axis=1)
 
-    return normed, courses, X
+    return normed, X
 
 def predict_house(data, weights):
-    ### Look into the magic orb ###
-    # print(data) ###
-    # print(weights) ###
-
     houses = ['Gryffindor', 'Ravenclaw', 'Slytherin', 'Hufflepuff']
-    _, _, X = preprocess(data)
-    predictions = data.iloc[:, 1]  # index + house len(X)
-    # print(predictions)
+    _, X = preprocess(data)
     weights = weights.drop(weights.columns[0], axis=1)
-    # theta = weights.iloc[0:1].reshape(scores.shape[1], 1)
+    students = data.loc[:, 'Hogwarts House'].to_frame()
 
-    theta = np.array(weights.iloc[0:1]).reshape(X.shape[1], 1)
+    i = 0
+    for house in houses:
+        theta = np.array(weights.iloc[i:i+1]).reshape(X.shape[1], 1)
+        p = predict(X, theta)
+        students[house] = p
+        i += 1
 
-    p = predict(X, theta)
-
-    for student in data:
-        for house in houses:
-            p = predict(X, theta)
-            print(house, p)
-            # p = np.where(p > 0.5)
-            # if p > 0.5:
-                # student['housename'] = house
-            # print(house)
-
-    # print(p)
-
-
-    # predictions = 'You stay classy San Diego!' ####
+    students = students.drop(columns=['Hogwarts House'])
+    predictions = students.idxmax(axis=1)
     return predictions
 
 def main():
     usage = 'Given dataset_test.csv and weights.csv, generate prediction file houses.csv'
     data, weights = parse_args(usage)
     predictions = predict_house(data, weights)
-    write_houses(predictions)
+    predictions.to_csv('houses.csv', index_label='Index', header=['Hogwarts House'])
+    # write_houses(predictions)
 
 if __name__ == '__main__':
     main()

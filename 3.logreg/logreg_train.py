@@ -30,7 +30,8 @@ def normalize(data):
     return normed
 
 def preprocess(data):
-    data = data.drop(columns=['Arithmancy', 'Defense Against the Dark Arts', 'Potions', 'Care of Magical Creatures'])
+    # data = data.drop(columns=['Arithmancy', 'Defense Against the Dark Arts', 'Potions', 'Care of Magical Creatures'])
+    data = data.drop(columns=['Arithmancy', 'Defense Against the Dark Arts', 'Care of Magical Creatures'])
     data = data.dropna()
     normed = normalize(data)
 
@@ -41,16 +42,13 @@ def preprocess(data):
     X = normed.loc[:, 'Astronomy':]
     ones = np.ones([X.shape[0],1])
     X = np.concatenate((ones, X), axis=1)
-    print(X)
 
     return normed, courses, X
 
 # returns a numpy array of 0s and 1s (not in <housename> / is in <housename>)
 def iterate_houses(normed, house):
-    y = np.array(normed.loc[:,'Hogwarts House']).reshape(1359,1) ## why use data here, rather than normed?
+    y = np.array(normed.loc[:,'Hogwarts House']).reshape(normed.shape[0],1) ## why use data here, rather than normed?
     housename = np.array([house])
-    
-    # y = filter_House(house, y).astype(int)
     return (y == housename).astype(int)
 
 def train(normed, X):
@@ -64,7 +62,6 @@ def train(normed, X):
         theta = np.zeros(X.shape[1]).reshape(X.shape[1],1)
         theta, J_history = fit(X, y, theta, alpha, num_iters)
         flatten = [item for array in theta for item in array] ## flattens a 2D array into 1D
-        # p = predict(X, theta)
         weights[house] = flatten
 
     return weights
@@ -76,9 +73,7 @@ def main():
     normed, courses, X = preprocess(data)
     weights = train(normed, X)
    
-    # weights = pd.DataFrame.from_dict(weights, columns=courses, orient='index')
-    weights = pd.DataFrame.from_dict(weights, orient='index', columns=courses)
-    print(weights)
+    weights = pd.DataFrame.from_dict(weights, columns=courses, orient='index')
     # weights.to_csv('weights.csv', header=False)
     weights.to_csv('weights.csv')
 
