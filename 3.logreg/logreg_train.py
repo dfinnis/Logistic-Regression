@@ -25,8 +25,7 @@ def parse_args(usage):
     return data, timer
 
 def preprocess(data):
-    fill = 'drop'
-    normed, X = tools.generic_preprocess(data, fill)
+    normed, X = tools.generic_preprocess(data, 'drop')
     courses = list(normed.columns.values)
     courses[0] = 'intercept'
     return normed, courses, X

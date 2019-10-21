@@ -24,14 +24,9 @@ def parse_args(usage):
     weights = tools.read_csv(weights_path)
     return data, weights
 
-def preprocess(data):
-    fill = 'mean'
-    normed, X = tools.generic_preprocess(data, fill)
-    return X
-
 def predict_house(data, weights):
     houses = ['Gryffindor', 'Ravenclaw', 'Slytherin', 'Hufflepuff']
-    X = preprocess(data)
+    _, X = tools.generic_preprocess(data, 'mean')
     weights = weights.drop(weights.columns[0], axis=1)
     students = data.loc[:, 'Hogwarts House'].to_frame()
 
