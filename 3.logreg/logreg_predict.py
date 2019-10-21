@@ -4,6 +4,7 @@ import tools as tools
 import argparse
 import numpy as np
 import pandas as pd
+import logistic_regression as logreg
 
 np.set_printoptions(suppress=True)
 
@@ -33,7 +34,7 @@ def predict_house(data, weights):
     i = 0
     for house in houses:
         theta = np.array(weights.iloc[i:i+1]).reshape(X.shape[1], 1)
-        p = tools.predict(X, theta)
+        p = logreg.predict(X, theta)
         students[house] = p
         i += 1
 

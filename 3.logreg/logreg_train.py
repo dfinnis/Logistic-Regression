@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import argparse
 import time
+import logistic_regression as logreg
 
 # np.set_printoptions(threshold=sys.maxsize, suppress=True)    
 
@@ -35,22 +36,6 @@ def iterate_houses(normed, house):
     housename = np.array([house])
     return (y == housename).astype(int) # returns a numpy array of 0s and 1s (not in <housename> / is in <housename>)
 
-def cost(X, y, theta):
-    m = X.shape[0]
-    hyp = tools.predict(X, theta)
-    part1 = np.dot(-y.T, np.log(hyp))
-    part2 = np.dot((1 - y).T, np.log(1 - hyp))
-    return (part1 - part2) / m
-
-def fit(X, y, theta, alpha, num_iters):
-    m = X.shape[0]
-    J_history = []
-    for i in range(num_iters):
-        hyp = tools.predict(X, theta)
-        theta = theta - (alpha/m) * np.dot(X.T, (hyp - y))
-        J_history.append(float(cost(X, y, theta)))
-    return theta, J_history
-
 def train(normed, X):
     alpha = 0.02
     num_iters = 100000
@@ -59,7 +44,7 @@ def train(normed, X):
     for house in houses:
         y = iterate_houses(normed, house)
         theta = np.zeros(X.shape[1]).reshape(X.shape[1],1)
-        theta, J_history = fit(X, y, theta, alpha, num_iters)
+        theta, J_history = logreg.fit(X, y, theta, alpha, num_iters)
         flatten = [item for array in theta for item in array] ## flattens a 2D array into 1D
         weights[house] = flatten
     return weights

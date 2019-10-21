@@ -54,12 +54,3 @@ def generic_preprocess(data, fill):
     ones = np.ones([X.shape[0],1])
     X = np.concatenate((ones, X), axis=1)
     return normed, X
-
-def sigmoid(z):
-    return 1 / (1 + np.exp(-z))
-    
-def predict(X, theta):
-    z = sigmoid(np.dot(X, theta))
-    z[(z == 0)] += 10e-6 # takes care of bug
-    z[(z == 1)] -= 10e-6
-    return z
