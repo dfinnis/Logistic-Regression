@@ -4,18 +4,8 @@ import tools as tools
 import argparse
 import numpy as np
 import pandas as pd
-from logreg_train import normalize
-from Logistic_Regression import predict
 
-np.set_printoptions(suppress=True)  
-
-def write_houses(predictions):
-    try:
-        file = open('../data/houses.csv', 'w')            
-        file.write(predictions)
-        file.close
-    except Exception:
-    	tools.error_exit('Saving houses.csv failed')
+np.set_printoptions(suppress=True)
 
 def parse_args(usage):
     my_parser = argparse.ArgumentParser(description=usage)
@@ -37,12 +27,11 @@ def parse_args(usage):
 def preprocess(data):
     data = data.drop(columns=['Arithmancy', 'Defense Against the Dark Arts', 'Care of Magical Creatures'])
     data = data.fillna(data.mean())
-    normed = normalize(data)
+    normed = tools.normalize(data)
 
     X = normed.loc[:, 'Astronomy':]
     ones = np.ones([X.shape[0],1])
     X = np.concatenate((ones, X), axis=1)
-
     return normed, X
 
 def predict_house(data, weights):
@@ -54,7 +43,7 @@ def predict_house(data, weights):
     i = 0
     for house in houses:
         theta = np.array(weights.iloc[i:i+1]).reshape(X.shape[1], 1)
-        p = predict(X, theta)
+        p = tools.predict(X, theta)
         students[house] = p
         i += 1
 
@@ -62,24 +51,21 @@ def predict_house(data, weights):
     predictions = students.idxmax(axis=1)
     return predictions
 
+def write_houses(predictions):
+    try:
+        predictions.to_csv('../data/houses.csv', index_label='Index', header=['Hogwarts House'])
+        print('Successfully saved predicted houses to ../data/houses.csv')
+    except Exception:
+    	tools.error_exit('Saving houses.csv failed')
+
 def main():
     usage = 'Given dataset_test.csv and weights.csv, generate prediction file houses.csv'
     data, weights = parse_args(usage)
     predictions = predict_house(data, weights)
-    predictions.to_csv('houses.csv', index_label='Index', header=['Hogwarts House'])
-    # write_houses(predictions)
+    write_houses(predictions)
 
 if __name__ == '__main__':
     main()
 
-## correct format:
-## $> cat houses.csv
-## Index,Hogwarts House
-## 0,Gryffindor
-## 1,Hufflepuff
-## 2,Ravenclaw
-## 3,Hufflepuff
-## 4,Slytherin
-## 5,Ravenclaw
-## 6,Hufflepuff
-##        [...]
+## TO RUN:
+## python3 logreg_predict.py ../data/dataset_train.csv ../data/weights.csv

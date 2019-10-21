@@ -4,6 +4,7 @@ import sys
 import pandas as pd
 sys.path.append('../1.analyze/')
 import describe as describe
+import numpy as np
 
 def error_exit(err_msg):
     print('Error: {}' .format(err_msg))
@@ -41,3 +42,12 @@ def normalize(data):
             std = features[column][2]
             normed[column] = (normed[column] - mean) / std
     return normed
+
+def sigmoid(z):
+    return 1 / (1 + np.exp(-z))
+    
+def predict(X, theta):
+    z = sigmoid(np.dot(X, theta))
+    z[(z == 0)] += 10e-6 # takes care of bug
+    z[(z == 1)] -= 10e-6
+    return z

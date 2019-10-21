@@ -1,61 +1,73 @@
 import sys
 sys.path.append('../tools/')
 import tools as tools
-sys.path.append('../1.analyze/')
-import describe as describe
 import numpy as np
 import pandas as pd
-from Logistic_Regression import fit, cost, predict, sigmoid
+import argparse
 
-import timeit
-    
 # np.set_printoptions(threshold=sys.maxsize, suppress=True)    
 
-def write_weights(weights):
-    try:
-        file = open('../data/weights.csv', 'w')            
-        file.write(weights)
-        file.close
-    except Exception:
-    	tools.error_exit('Saving weights.csv failed')
-
-def normalize(data):
-    features = describe.find_features(data)
-    normed = data.drop(columns=['Index', 'First Name', 'Last Name', 'Birthday', 'Best Hand'])
-    for column in normed.columns:
-        if not column == 'Hogwarts House':
-            mean = features[column][1]
-            std = features[column][2]
-            normed[column] = (normed[column] - mean) / std
-    return normed
+def parse_args(usage):
+    my_parser = argparse.ArgumentParser(description=usage)
+    my_parser.add_argument('Dataset',
+        metavar='dataset',
+        type=str,
+        help='the path to dataset')
+    my_parser.add_argument('-a',
+        '--alpha',
+        type=float,
+        help='set learning rate (alpha). Default 0.02')
+    my_parser.add_argument('-n',
+        '--num_iterations',
+        type=int,
+        help='set number of iterations. Default 100000')
+    args = my_parser.parse_args()
+    path = args.Dataset
+    alpha = args.alpha
+    num_iters = args.num_iterations
+    data = tools.read_csv(path)
+    if alpha is None:
+        alpha = 0.02
+    if num_iters is None:
+        num_iters = 100000
+    return data, alpha, num_iters
 
 def preprocess(data):
-    # data = data.drop(columns=['Arithmancy', 'Defense Against the Dark Arts', 'Potions', 'Care of Magical Creatures'])
     data = data.drop(columns=['Arithmancy', 'Defense Against the Dark Arts', 'Care of Magical Creatures'])
     data = data.dropna()
-    normed = normalize(data)
-
+    normed = tools.normalize(data)
+    
     courses = list(normed.columns.values)
     courses[0] = 'intercept'
-    # courses.remove('Hogwarts House')
-
+    
     X = normed.loc[:, 'Astronomy':]
     ones = np.ones([X.shape[0],1])
     X = np.concatenate((ones, X), axis=1)
-
     return normed, courses, X
 
-# returns a numpy array of 0s and 1s (not in <housename> / is in <housename>)
 def iterate_houses(normed, house):
-    y = np.array(normed.loc[:,'Hogwarts House']).reshape(normed.shape[0],1) ## why use data here, rather than normed?
+    y = np.array(normed.loc[:,'Hogwarts House']).reshape(normed.shape[0],1)
     housename = np.array([house])
-    return (y == housename).astype(int)
+    return (y == housename).astype(int) # returns a numpy array of 0s and 1s (not in <housename> / is in <housename>)
 
-def train(normed, X):
-    alpha = 0.02
-    num_iters = 100000
+def cost(X, y, theta):
+    m = X.shape[0]
+    hyp = tools.predict(X, theta)
+    part1 = np.dot(-y.T, np.log(hyp))
+    part2 = np.dot((1 - y).T, np.log(1 - hyp))
+    return (part1 - part2) / m
+
+def fit(X, y, theta, alpha, num_iters):
+    m = X.shape[0]
+    J_history = []
+    for i in range(num_iters):
+        hyp = tools.predict(X, theta)
+        theta = theta - (alpha/m) * np.dot(X.T, (hyp - y))
+        J_history.append(float(cost(X, y, theta)))
+    return theta, J_history
+
+def train(normed, X, alpha, num_iters):
     weights = {}
-
     houses = ['Gryffindor', 'Ravenclaw', 'Slytherin', 'Hufflepuff']
     for house in houses:
         y = iterate_houses(normed, house)
@@ -63,28 +75,26 @@ def train(normed, X):
         theta, J_history = fit(X, y, theta, alpha, num_iters)
         flatten = [item for array in theta for item in array] ## flattens a 2D array into 1D
         weights[house] = flatten
-
     return weights
+
+def write_weights(weights, courses):
+    try:
+        weights = pd.DataFrame.from_dict(weights, columns=courses, orient='index')
+        weights.to_csv('../data/weights.csv')
+        print('Successfully saved weights to ../data/weights.csv')
+    except Exception:
+    	tools.error_exit('Saving weights.csv failed')
 
 def main():
     usage = 'Given dataset_train.csv, generate weights.csv for prediction.\
              Use gradient descent to minimize error'
-    data = tools.parse_arg(usage)
+    data, alpha, num_iters = parse_args(usage)
     normed, courses, X = preprocess(data)
-    weights = train(normed, X)
-   
-    weights = pd.DataFrame.from_dict(weights, columns=courses, orient='index')
-    # weights.to_csv('weights.csv', header=False)
-    weights.to_csv('weights.csv')
-
+    weights = train(normed, X, alpha, num_iters)
+    write_weights(weights, courses)
 
 if __name__ == '__main__':
     main()
 
-
-
-
-
-# Reasons for removal:
-# 'Arithmancy' & 'Care of Magical Creatures' & 'Potions' - homogenous distribution between houses
-# 'Defense Against the Dark Arts' - same as Astronomy
+## TO RUN:
+## python3 logreg_train.py ../data/dataset_train.csv

@@ -62,3 +62,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+## TO RUN:
+## python3 decribe.py ../data/dataset_train.csv

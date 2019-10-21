@@ -26,7 +26,7 @@ def parse_args(usage):
 def preprocess(data, plot_all):
     data = data.drop(columns=['Index', 'First Name', 'Last Name', 'Birthday', 'Best Hand'])
     if plot_all == False:
-        data = data.drop(columns=['Arithmancy', 'Care of Magical Creatures', 'Potions', 'Defense Against the Dark Arts'])
+        data = data.drop(columns=['Arithmancy', 'Care of Magical Creatures', 'Defense Against the Dark Arts'])
     data = data.dropna()
     return data
 
@@ -42,3 +42,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+## TO RUN:
+## python3 pair_plot.py ../data/dataset_train.csv

@@ -25,3 +25,6 @@ def main():
 
 if __name__ == '__main__':
 	main()
+
+## TO RUN:
+## python3 scatter_plot.py ../data/dataset_train.csv

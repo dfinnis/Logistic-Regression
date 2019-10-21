@@ -1,8 +1,6 @@
 import sys
 sys.path.append('../tools/')
 import tools as tools
-sys.path.append('../1.analyze/')
-import describe as describe
 import matplotlib.pyplot as plt
 import warnings
 
@@ -26,7 +24,6 @@ def visualize(data, normed):
     warnings.simplefilter(action = 'ignore', category = RuntimeWarning)
     histogram(data, normed, 'Arithmancy')                ## homogeneous
     histogram(data, normed, 'Care of Magical Creatures') ## homogeneous
-    histogram(data, normed, 'Potions')                   ## mostly homogenous
 
 def main():
     usage = 'Display a histogram answering the question:\
@@ -37,3 +34,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+## TO RUN:
+## python3 histogram.py ../data/dataset_train.csv
