@@ -4,6 +4,7 @@ import tools as tools
 import numpy as np
 import pandas as pd
 import argparse
+import time
 
 # np.set_printoptions(threshold=sys.maxsize, suppress=True)    
 
@@ -13,24 +14,15 @@ def parse_args(usage):
         metavar='dataset',
         type=str,
         help='the path to dataset')
-    my_parser.add_argument('-a',
-        '--alpha',
-        type=float,
-        help='set learning rate (alpha). Default 0.02')
-    my_parser.add_argument('-n',
-        '--num_iterations',
-        type=int,
-        help='set number of iterations. Default 100000')
+    my_parser.add_argument('-t',
+        '--timer',
+        action='store_true',
+        help='Display time taken. Default false')
     args = my_parser.parse_args()
     path = args.Dataset
-    alpha = args.alpha
-    num_iters = args.num_iterations
     data = tools.read_csv(path)
-    if alpha is None:
-        alpha = 0.02
-    if num_iters is None:
-        num_iters = 100000
-    return data, alpha, num_iters
+    timer = args.timer
+    return data, timer
 
 def preprocess(data):
     data = data.drop(columns=['Arithmancy', 'Defense Against the Dark Arts', 'Care of Magical Creatures'])
@@ -66,7 +58,9 @@ def fit(X, y, theta, alpha, num_iters):
         J_history.append(float(cost(X, y, theta)))
     return theta, J_history
 
-def train(normed, X, alpha, num_iters):
+def train(normed, X):
+    alpha = 0.02
+    num_iters = 100000
     weights = {}
     houses = ['Gryffindor', 'Ravenclaw', 'Slytherin', 'Hufflepuff']
     for house in houses:
@@ -88,10 +82,13 @@ def write_weights(weights, courses):
 def main():
     usage = 'Given dataset_train.csv, generate weights.csv for prediction.\
              Use gradient descent to minimize error'
-    data, alpha, num_iters = parse_args(usage)
+    data, timer = parse_args(usage)
+    start_time = time.time()
     normed, courses, X = preprocess(data)
-    weights = train(normed, X, alpha, num_iters)
+    weights = train(normed, X)
     write_weights(weights, courses)
+    if timer == True:
+        print("--- Training took %s seconds ---" % round((time.time() - start_time), 2))
 
 if __name__ == '__main__':
     main()

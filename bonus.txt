@@ -2,7 +2,5 @@
 1. accuracy.py
 2. pairplot -a, plot all courses
 3. Error handling, messages & usage
-4. logreg_train
-	-alpha
-	-num_iterations
+4. logreg_train -t timer
 5. pandas_describe.py
