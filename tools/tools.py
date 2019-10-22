@@ -35,13 +35,16 @@ def parse_arg(usage):
     return data
 
 def normalize(data):
-    features = describe.find_features(data)
-    normed = data.drop(columns=['Index', 'First Name', 'Last Name', 'Birthday', 'Best Hand'])
-    for column in normed.columns:
-        if not column == 'Hogwarts House':
-            mean = features[column][1]
-            std = features[column][2]
-            normed[column] = (normed[column] - mean) / std
+    try:
+        features = describe.find_features(data)
+        normed = data.drop(columns=['Index', 'First Name', 'Last Name', 'Birthday', 'Best Hand'])
+        for column in normed.columns:
+            if not column == 'Hogwarts House':
+                mean = features[column][1]
+                std = features[column][2]
+                normed[column] = (normed[column] - mean) / std
+    except Exception:
+        error_exit('Failed to normalize data. Is data valid?')
     return normed
 
 def generic_preprocess(data, fill):

@@ -24,15 +24,21 @@ def parse_args(usage):
     return data, plot_all
 
 def preprocess(data, plot_all):
-    data = data.drop(columns=['Index', 'First Name', 'Last Name', 'Birthday', 'Best Hand'])
-    if plot_all == False:
-        data = data.drop(columns=['Arithmancy', 'Care of Magical Creatures', 'Defense Against the Dark Arts'])
-    data = data.dropna()
+    try:
+        data = data.drop(columns=['Index', 'First Name', 'Last Name', 'Birthday', 'Best Hand'])
+        if plot_all == False:
+            data = data.drop(columns=['Arithmancy', 'Care of Magical Creatures', 'Defense Against the Dark Arts'])
+        data = data.dropna()
+    except Exception:
+        tools.error_exit('Failed to preprocess data. Is data valid?')
     return data
 
 def visualize(data):
-    sb.pairplot(data, hue='Hogwarts House', palette=['blue', 'green', 'red', 'gold'], markers = '.', height=2)
-    plt.show()
+    try:
+        sb.pairplot(data, hue='Hogwarts House', palette=['blue', 'green', 'red', 'gold'], markers = '.', height=2)
+        plt.show()
+    except Exception:
+        tools.error_exit('Failed to visualize data. Is data valid?')
 
 def main():
     usage = 'Display a pair plot which highlights features useful for logistic regression'

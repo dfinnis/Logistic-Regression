@@ -13,9 +13,12 @@ def scatter(data, course1, course2):
 	plt.show()
 
 def visualize(data):
-	course1 = 'Defense Against the Dark Arts'
-	course2 = 'Astronomy'
-	scatter(data, course1, course2)
+	try:
+		course1 = 'Defense Against the Dark Arts'
+		course2 = 'Astronomy'
+		scatter(data, course1, course2)
+	except Exception:
+		tools.error_exit('Failed to visualize data. Is data valid?')
 
 def main():
 	usage = 'Display a scatter plot answering the question:\

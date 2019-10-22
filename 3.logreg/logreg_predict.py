@@ -33,20 +33,23 @@ def parse_args(usage):
     return data, weights
 
 def predict_house(data, weights):
-    houses = ['Gryffindor', 'Ravenclaw', 'Slytherin', 'Hufflepuff']
-    _, X = tools.generic_preprocess(data, 'mean')
-    weights = weights.drop(weights.columns[0], axis=1)
-    students = data.loc[:, 'Hogwarts House'].to_frame()
+    try:
+        houses = ['Gryffindor', 'Ravenclaw', 'Slytherin', 'Hufflepuff']
+        _, X = tools.generic_preprocess(data, 'mean')
+        weights = weights.drop(weights.columns[0], axis=1)
+        students = data.loc[:, 'Hogwarts House'].to_frame()
 
-    i = 0
-    for house in houses:
-        theta = np.array(weights.iloc[i:i+1]).reshape(X.shape[1], 1)
-        p = logreg.predict(X, theta)
-        students[house] = p
-        i += 1
+        i = 0
+        for house in houses:
+            theta = np.array(weights.iloc[i:i+1]).reshape(X.shape[1], 1)
+            p = logreg.predict(X, theta)
+            students[house] = p
+            i += 1
 
-    students = students.drop(columns=['Hogwarts House'])
-    predictions = students.idxmax(axis=1)
+        students = students.drop(columns=['Hogwarts House'])
+        predictions = students.idxmax(axis=1)
+    except Exception:
+        tools.error_exit('Failed to predict houses.')
     return predictions
 
 def write_houses(predictions):

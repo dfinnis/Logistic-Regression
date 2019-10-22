@@ -31,9 +31,12 @@ def parse_args(usage):
     return data, timer, cost
 
 def preprocess(data):
-    normed, X = tools.generic_preprocess(data, 'drop')
-    courses = list(normed.columns.values)
-    courses[0] = 'intercept'
+    try:
+        normed, X = tools.generic_preprocess(data, 'drop')
+        courses = list(normed.columns.values)
+        courses[0] = 'intercept'
+    except Exception:
+        tools.error_exit('Failed to preprocess data. Is data valid?')
     return normed, courses, X
 
 def iterate_houses(normed, house):
@@ -42,22 +45,25 @@ def iterate_houses(normed, house):
     return (y == housename).astype(int) # returns a numpy array of 0s and 1s (not in <housename> / is in <housename>)
 
 def train(normed, X, cost):
-    alpha = 0.02
-    num_iters = 100000
-    weights = {}
-    houses = ['Gryffindor', 'Ravenclaw', 'Slytherin', 'Hufflepuff']
-    if cost == True:
-        ax = tools.plot_set_up()
-    for house in houses:
-        y = iterate_houses(normed, house)
-        theta = np.zeros(X.shape[1]).reshape(X.shape[1],1)
-        theta, J_history = logreg.fit(X, y, theta, alpha, num_iters)
+    try:
+        alpha = 0.02
+        num_iters = 100000
+        weights = {}
+        houses = ['Gryffindor', 'Ravenclaw', 'Slytherin', 'Hufflepuff']
         if cost == True:
-            tools.plot_house(J_history, house, ax)
-        flatten = [item for array in theta for item in array] ## flattens a 2D array into 1D
-        weights[house] = flatten
-    if cost == True:
-        tools.plot_show()
+            ax = tools.plot_set_up()
+        for house in houses:
+            y = iterate_houses(normed, house)
+            theta = np.zeros(X.shape[1]).reshape(X.shape[1],1)
+            theta, J_history = logreg.fit(X, y, theta, alpha, num_iters)
+            if cost == True:
+                tools.plot_house(J_history, house, ax)
+            flatten = [item for array in theta for item in array] ## flattens a 2D array into 1D
+            weights[house] = flatten
+        if cost == True:
+            tools.plot_show()
+    except Exception:
+        tools.error_exit('Failed to train weights.')
     return weights
 
 def write_weights(weights, courses):
