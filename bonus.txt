@@ -1,6 +1,11 @@
+to_do
+#!/usr/bin/python3
+logreg_train processing bar
+
 #### BONUS ####
+0. logreg_train.py -c, Plot cost
 1. accuracy.py
-2. pairplot -a, plot all courses
+2. pairplot.py -a, plot all courses
 3. Error handling, messages & usage
 4. logreg_train -t timer
 5. pandas_describe.py

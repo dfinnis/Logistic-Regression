@@ -7,7 +7,7 @@ import argparse
 import time
 import logistic_regression as logreg
 
-# np.set_printoptions(threshold=sys.maxsize, suppress=True)    
+# np.set_printoptions(threshold=sys.maxsize, suppress=True) ## Print non-truncated output
 
 def parse_args(usage):
     my_parser = argparse.ArgumentParser(description=usage)
@@ -19,11 +19,16 @@ def parse_args(usage):
         '--timer',
         action='store_true',
         help='Display time taken. Default false')
+    my_parser.add_argument('-c',
+        '--cost',
+        action='store_true',
+        help='Display cost graph, prediction error over training period. Default false')
     args = my_parser.parse_args()
     path = args.Dataset
     data = tools.read_csv(path)
     timer = args.timer
-    return data, timer
+    cost = args.cost
+    return data, timer, cost
 
 def preprocess(data):
     normed, X = tools.generic_preprocess(data, 'drop')
@@ -36,17 +41,23 @@ def iterate_houses(normed, house):
     housename = np.array([house])
     return (y == housename).astype(int) # returns a numpy array of 0s and 1s (not in <housename> / is in <housename>)
 
-def train(normed, X):
+def train(normed, X, cost):
     alpha = 0.02
     num_iters = 100000
     weights = {}
     houses = ['Gryffindor', 'Ravenclaw', 'Slytherin', 'Hufflepuff']
+    if cost == True:
+        ax = tools.plot_set_up()
     for house in houses:
         y = iterate_houses(normed, house)
         theta = np.zeros(X.shape[1]).reshape(X.shape[1],1)
         theta, J_history = logreg.fit(X, y, theta, alpha, num_iters)
+        if cost == True:
+            tools.plot_house(J_history, house, ax)
         flatten = [item for array in theta for item in array] ## flattens a 2D array into 1D
         weights[house] = flatten
+    if cost == True:
+        tools.plot_show()
     return weights
 
 def write_weights(weights, courses):
@@ -60,10 +71,10 @@ def write_weights(weights, courses):
 def main():
     usage = 'Given dataset_train.csv, generate weights.csv for prediction.\
              Use gradient descent to minimize error'
-    data, timer = parse_args(usage)
+    data, timer, cost = parse_args(usage)
     start_time = time.time()
     normed, courses, X = preprocess(data)
-    weights = train(normed, X)
+    weights = train(normed, X, cost)
     write_weights(weights, courses)
     if timer == True:
         print("--- Training took %s seconds ---" % round((time.time() - start_time), 2))

@@ -5,6 +5,7 @@ import pandas as pd
 sys.path.append('../1.analyze/')
 import describe as describe
 import numpy as np
+import matplotlib.pyplot as plot
 
 def error_exit(err_msg):
     print('Error: {}' .format(err_msg))
@@ -54,3 +55,26 @@ def generic_preprocess(data, fill):
     ones = np.ones([X.shape[0],1])
     X = np.concatenate((ones, X), axis=1)
     return normed, X
+
+def plot_set_up():
+    plot.figure()
+    ax = plot.axes()
+    plot.title("Prediction Error over Training period")
+    plot.xlabel("Number of Iterations")
+    plot.ylabel("Prediction Error")
+    return ax
+
+def plot_house(J_history, house, ax):
+    if house == 'Ravenclaw':
+        color = 'b'
+    if house == 'Slytherin':
+        color = 'g'
+    if house == 'Gryffindor':
+        color = 'r'
+    if house == 'Hufflepuff':
+        color = 'y'
+    ax.plot(J_history, label=house, color = color)
+
+def plot_show():
+    plot.legend(loc = 'upper right')
+    plot.show()
