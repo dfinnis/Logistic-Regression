@@ -19,7 +19,12 @@ def parse_args(usage):
     predicted_path = args.Predicted
     true = tools.read_csv(true_path)
     predicted = tools.read_csv(predicted_path)
-    return true['Hogwarts House'], predicted['Hogwarts House']
+    try:
+        true = true['Hogwarts House']
+        predicted = predicted['Hogwarts House']
+    except Exception:
+        tools.error_exit('Failed to find house in data. Is data valid?')
+    return true, predicted
 
 def find_accuracy(true, predicted):
 	try:
