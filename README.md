@@ -1,5 +1,9 @@
 # Logistic-Regression
 
+A sorting hat for Hogwarts Houses.
+
+A multi-class classifer, using logistic regression coded from scratch.
+
 #### Final Score 125/100
 
 ## Getting Started
@@ -7,17 +11,15 @@
 First clone this repo.
 ```git clone https://github.com/anyashuka/Logistic-Regression.git```
 
-download dependencies??
+Download dependencies...???????????????????!!!!!!!!!!!!!!!!!!!!!
 
-To run...
-```run```
+## 1.analyze
 
-### Usage
+Display info on numerical features. Recode pandas describe.
 
+## 2.visualize
 
-
-## Flags
-
+## 3.logreg
 
 
 ## Tests
@@ -26,7 +28,10 @@ To run...
 
 ## Dependencies
 
+Python, argparse, sys
 
+Seaborne - graphs and charts
 
 ## References
+
 
