@@ -12,15 +12,18 @@ First clone this repo.
 
 ```git clone https://github.com/anyashuka/Logistic-Regression.git; cd Logistic-Regression```
 
-Move into the Logistic-Regression folder and download dependencies.
+
+Download dependencies.
 
 ```pip install -r requirements.txt```
+
 
 Then simply run the ```run_all.sh``` script to follow the following steps in each folder.
 
 ```./run_all.sh```
 
 <img src="https://github.com/anyashuka/Logistic-Regression/blob/master/img/run_all.png">
+
 
 ## 1.analyze
 
@@ -30,9 +33,11 @@ Run with dataset_train.csv as argument, ```describe.py``` displays info on numer
 
 ```python3 describe.py ../data/dataset_train.csv```
 
+
 The output can be compared with the output of Pandas describe() for dataset_train.csv by running:
 
 ```python3 pandas_describe.py```
+
 
 ## 2.visualize
 
@@ -47,6 +52,7 @@ Arithmancy & Care of Magical Creatures
 
 <img src="https://github.com/anyashuka/Logistic-Regression/blob/master/img/histogram_care.png" width="400">
 
+
 ### Scatter_plot
 
 What are the two features that are similar?
@@ -56,6 +62,7 @@ Astronomy & Defense Against the Dark Arts
 
 <img src="https://github.com/anyashuka/Logistic-Regression/blob/master/img/scatter_plot.png" width="400">
 
+
 ### Pair_plot
 
 What features are you going to use for your logistic regression?
@@ -63,6 +70,7 @@ What features are you going to use for your logistic regression?
 ```python3 pair_plot.py ../data/dataset_train.csv```
 
 <img src="https://github.com/anyashuka/Logistic-Regression/blob/master/img/pair_plot.png">
+
 
 ## 3.logreg
 
@@ -83,11 +91,13 @@ Display cost graph, prediction error over training period.
 
 <img src="https://github.com/anyashuka/Logistic-Regression/blob/master/img/training.png" width="400">
 
+
 ### Predict
 
 Predict houses for dataset_test.csv, using the model saved as weights.csv. Saves predicted houses to ```houses.csv```.
 
 ```python3 logreg_predict.py ../data/dataset_test.csv ../data/weights.csv```
+
 
 ## Test Accuracy
 
@@ -96,6 +106,7 @@ Test accuracy of predicted houses against dataset_truth.csv. In ```tools/``` run
 ```python3 accuracy.py ../data/dataset_truth.csv ../data/houses.csv```
 
 <img src="https://github.com/anyashuka/Logistic-Regression/blob/master/img/accuracy.png" width="800">
+
 
 ## Dependencies
 
