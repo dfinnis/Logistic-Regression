@@ -77,17 +77,15 @@ Display cost graph, prediction error over training period.
 
 ### Predict
 
-Predict houses for dataset_test.csv, using the model saved as weights.csv.
+Predict houses for dataset_test.csv, using the model saved as weights.csv. Saves predicted houses to ```houses.csv```.
 
 ```python3 logreg_predict.py ../data/dataset_test.csv ../data/weights.csv```
 
-Save predicted houses to ```houses.csv```.
-
 ## Test Accuracy
 
-Test accuracy of predicted houses against dataset_truth.csv.
+Test accuracy of predicted houses against dataset_truth.csv. In ```tools/``` run:
 
-In ```tools/``` run ```python3 accuracy.py ../data/dataset_truth.csv ../data/houses.csv```
+```python3 accuracy.py ../data/dataset_truth.csv ../data/houses.csv```
 
 <img src="https://github.com/anyashuka/Logistic-Regression/blob/master/img/accuracy.png" width="800">
 
