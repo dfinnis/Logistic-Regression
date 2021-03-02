@@ -18,7 +18,7 @@ Download dependencies.
 ```pip install -r requirements.txt```
 
 
-Then simply run the ```run_all.sh``` script to follow the following steps in each folder.
+Then simply run the run_all.sh script to follow the following steps in each folder.
 
 ```./run_all.sh```
 
@@ -27,9 +27,9 @@ Then simply run the ```run_all.sh``` script to follow the following steps in eac
 
 ## 1.analyze
 
-```describe.py``` is Pandas describe() recoded from scratch, using Numpy.
+describe.py is Pandas describe() recoded from scratch, using Numpy.
 
-Run with dataset_train.csv as argument, ```describe.py``` displays info on numerical feaures for dataset_train.csv.
+Run with dataset_train.csv as argument, describe.py displays info on numerical feaures for dataset_train.csv.
 
 ```python3 describe.py ../data/dataset_train.csv```
 
@@ -81,13 +81,11 @@ Save model to weights.csv.
 
 ```python3 logreg_train.py ../data/dataset_train.csv -t -c```
 
-#### Flag -t, --timer
+#### Flags
 
-Display time taken to train. Takes nearly a minute on my system for 100000 epochs.
+* -t, --timer. Display time taken to train. Takes nearly a minute on my system for 100000 epochs.
 
-#### Flag -c, --cost
-
-Display cost graph, prediction error over training period.
+* -c, --cost. Display cost graph, prediction error over training period.
 
 <img src="https://github.com/anyashuka/Logistic-Regression/blob/master/img/training.png" width="400">
 
@@ -110,7 +108,7 @@ Test accuracy of predicted houses against dataset_truth.csv. In ```tools/``` run
 
 ## Dependencies
 
-Thankfully running the following command should take care of dependencies for you.
+Thankfully, running the following command should take care of dependencies for you.
 
 ```pip install -r requirements.txt```
 
