@@ -22,9 +22,12 @@ Download dependencies...???????????????????!!!!!!!!!!!!!!!!!!!!!
 ```describe.py``` is Pandas describe() recoded from scratch, using Numpy.
 
 Run with dataset_train.csv as argument, ```describe.py``` displays info on numerical feaures for dataset_train.csv.
+
 ```python3 describe.py ../data/dataset_train.csv```
 
-Can be compared with the output of Pandas describe() for dataset_train.csv by running: ```python3 pandas_describe.py```
+Can be compared with the output of Pandas describe() for dataset_train.csv by running:
+
+```python3 pandas_describe.py```
 
 ## 2.visualize
 
@@ -59,6 +62,7 @@ What features are you going to use for your logistic regression?
 
 Train model to predict Hogwart's House using logistic regression and dataset_train.csv.
 Save model to weights.csv.
+
 ```python3 logreg_train.py ../data/dataset_train.csv -t -c```
 
 #### Flag -t, --timer
@@ -74,6 +78,7 @@ Display cost graph, prediction error over training period.
 ### Predict
 
 Predict houses for dataset_test.csv, using the model saved as weights.csv.
+
 ```python3 logreg_predict.py ../data/dataset_test.csv ../data/weights.csv```
 
 Save predicted houses to ```houses.csv```.
