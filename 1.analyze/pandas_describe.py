@@ -1,8 +1,12 @@
-import pandas as pd
+import pandas
+import tools as tools
 
-## Pandas describe dataset_train.csv
-## for reference against describe.py
-data = pd.read_csv("../data/dataset_train.csv")
-data = data.drop(columns=['Index'])
-desc = data.describe()
-print(desc)
+def main():
+	usage = 'Display pandas descibe output for given data set.\
+			 Provides reference for describe.py.'
+	df = tools.parse_arg(usage)
+	df = df.drop(columns=['Index'])
+	print(df.describe())
+
+if __name__ == '__main__':
+    main()
