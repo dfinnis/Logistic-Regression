@@ -16,8 +16,8 @@ cd ..
 
 #### -- 2.visualize -- ####
 cd 2.visualize
-echo "\n\x1b[1m2. Visualize\x1B[0m"
-echo
+echo "\n\x1b[1m2. Visualize\x1B[0m\n"
+
 echo "Histogram:"
 echo "Which Hogwarts course has a homogeneous score distribution between all four houses?"
 echo "Arithmancy & Care of Magical Creatures"
@@ -39,6 +39,7 @@ cd ..
 #### -- 3.logreg -- ####
 cd 3.logreg
 echo "\n\x1b[1m3. Logreg\x1B[0m\n"
+
 echo "Training model..."
 python3 logreg_train.py ../data/dataset_train.csv -c -t
 echo
