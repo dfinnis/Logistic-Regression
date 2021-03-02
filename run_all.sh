@@ -57,5 +57,5 @@ echo
 cd ..
 
 #### -- cleanup -- ####
-# rm data/weights.csv
-# rm data/houses.csv
+rm data/weights.csv
+rm data/houses.csv
