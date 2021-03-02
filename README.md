@@ -34,9 +34,9 @@ Run with dataset_train.csv as argument, ```describe.py``` displays info on numer
 ```python3 describe.py ../data/dataset_train.csv```
 
 
-The output can be compared with the output of Pandas describe() for dataset_train.csv by running:
+The output can be compared with the output of Pandas describe().
 
-```python3 pandas_describe.py```
+```python3 pandas_describe.py ../data/dataset_train.csv```
 
 
 ## 2.visualize
