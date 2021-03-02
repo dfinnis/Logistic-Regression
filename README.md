@@ -9,11 +9,16 @@ A multi-class classifer, using logistic regression coded from scratch.
 ## Getting Started
 
 First clone this repo.
-```git clone https://github.com/anyashuka/Logistic-Regression.git```
 
-Download dependencies...???????????????????!!!!!!!!!!!!!!!!!!!!!
+```git clone https://github.com/anyashuka/Logistic-Regression.git; cd Logistic-Regression```
 
-```./run_all.sh``` runs the following steps in each folder.
+Move into the Logistic-Regression folder and download dependencies.
+
+```pip install -r requirements.txt```
+
+Then simply run the ```run_all.sh``` script to follow the following steps in each folder.
+
+```./run_all.sh```
 
 <img src="https://github.com/anyashuka/Logistic-Regression/blob/master/img/run_all.png">
 
@@ -25,7 +30,7 @@ Run with dataset_train.csv as argument, ```describe.py``` displays info on numer
 
 ```python3 describe.py ../data/dataset_train.csv```
 
-Can be compared with the output of Pandas describe() for dataset_train.csv by running:
+The output can be compared with the output of Pandas describe() for dataset_train.csv by running:
 
 ```python3 pandas_describe.py```
 
@@ -33,9 +38,10 @@ Can be compared with the output of Pandas describe() for dataset_train.csv by ru
 
 ### Histogram
 
-Running ```python3 histogram.py ../data/dataset_train.csv``` answers the question:
 Which Hogwarts course has a homogeneous score distribution between all four houses?
 Arithmancy & Care of Magical Creatures
+
+```python3 histogram.py ../data/dataset_train.csv```
 
 <img src="https://github.com/anyashuka/Logistic-Regression/blob/master/img/histogram_arithmancy.png" width="400">
 
@@ -43,16 +49,18 @@ Arithmancy & Care of Magical Creatures
 
 ### Scatter_plot
 
-Running ```python3 scatter_plot.py ../data/dataset_train.csv``` answers the question:
 What are the two features that are similar?
 Astronomy & Defense Against the Dark Arts
+
+```python3 scatter_plot.py ../data/dataset_train.csv```
 
 <img src="https://github.com/anyashuka/Logistic-Regression/blob/master/img/scatter_plot.png" width="400">
 
 ### Pair_plot
 
-Running ```python3 pair_plot.py ../data/dataset_train.csv``` answers the question:
 What features are you going to use for your logistic regression?
+
+```python3 pair_plot.py ../data/dataset_train.csv```
 
 <img src="https://github.com/anyashuka/Logistic-Regression/blob/master/img/pair_plot.png">
 
@@ -91,9 +99,17 @@ Test accuracy of predicted houses against dataset_truth.csv. In ```tools/``` run
 
 ## Dependencies
 
-Python, argparse, sys
+Thankfully running the following command should take care of dependencies for you.
 
-Seaborn - pair plot
+```pip install -r requirements.txt```
+
+Python 3.9.1
+* pandas
+* numpy
+* seaborn
+* termcolor
+* matplotlib
+* scikit_learn
 
 ## References
 
