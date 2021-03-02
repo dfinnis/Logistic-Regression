@@ -110,7 +110,3 @@ Python 3.9.1
 * termcolor
 * matplotlib
 * scikit_learn
-
-## References
-
-
