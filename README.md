@@ -92,14 +92,14 @@ Save model to weights.csv.
 
 ### Predict
 
-Predict houses for dataset_test.csv, using the model saved as weights.csv. Saves predicted houses to ```houses.csv```.
+Predict houses for dataset_test.csv, using the model saved as weights.csv. Saves predicted houses to *data/houses.csv*.
 
 ```python3 logreg_predict.py ../data/dataset_test.csv ../data/weights.csv```
 
 
 ## Test Accuracy
 
-Test accuracy of predicted houses against dataset_truth.csv. In ```tools/``` run:
+Test accuracy of predicted houses against dataset_truth.csv. In *tools/* run:
 
 ```python3 accuracy.py ../data/dataset_truth.csv ../data/houses.csv```
 
