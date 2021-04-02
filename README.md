@@ -26,13 +26,11 @@ Then simply run the run_all.sh script to follow the following steps in each fold
 
 describe.py is Pandas describe() recoded from scratch, using Numpy.
 
-Run with dataset_train.csv as argument, describe.py displays info on numerical feaures for dataset_train.csv.
-
+Run with dataset_train.csv as argument, describe.py displays info on numerical feaures for dataset_train.csv. <br>
 ```python3 describe.py ../data/dataset_train.csv```
 
 
-The output can be compared with the output of Pandas describe().
-
+The output can be compared with the output of Pandas describe(). <br>
 ```python3 pandas_describe.py ../data/dataset_train.csv```
 
 
