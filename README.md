@@ -8,18 +8,15 @@ A multi-class classifer, using logistic regression coded from scratch.
 
 ## Getting Started
 
-First clone this repo.
-
+First clone this repo. <br>
 ```git clone https://github.com/dfinnis/Logistic-Regression.git; cd Logistic-Regression```
 
 
-Download dependencies.
-
+Download dependencies. <br>
 ```pip install -r requirements.txt```
 
 
-Then simply run the run_all.sh script to follow the following steps in each folder.
-
+Then simply run the run_all.sh script to follow the following steps in each folder. <br>
 ```./run_all.sh```
 
 <img src="https://github.com/dfinnis/Logistic-Regression/blob/master/img/run_all.png">
