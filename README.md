@@ -79,6 +79,7 @@ Save model to weights.csv.
 
 ```python3 logreg_train.py ../data/dataset_train.csv -t -c```
 
+
 #### Flags
 
 * -t, --timer. Display time taken to train. Takes nearly a minute on my system for 100000 epochs.
