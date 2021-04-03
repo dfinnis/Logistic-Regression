@@ -12,7 +12,7 @@ See the [subject](https://github.com/dfinnis/Logistic_Regression/blob/master/sub
 ## Getting Started
 
 First clone this repo. <br>
-```git clone https://github.com/dfinnis/Logistic-Regression.git; cd Logistic-Regression```
+```git clone https://github.com/dfinnis/Logistic_Regression.git; cd Logistic_Regression```
 
 
 Download dependencies. <br>
