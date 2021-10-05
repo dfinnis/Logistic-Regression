@@ -2,7 +2,7 @@
 
 A sorting hat for Hogwart's Houses.
 
-A multi-class classifer, using logistic regression coded from scratch.
+A multi-class classifier, using logistic regression coded from scratch.
 
 See the [subject](https://github.com/dfinnis/Logistic_Regression/blob/master/subject.pdf) for more details.
 
